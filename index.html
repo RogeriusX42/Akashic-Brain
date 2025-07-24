@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="page_title">Akashic Brain Project Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Dark slate text */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .gantt-table th, .gantt-table td {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #e2e8f0; /* Light gray border */
+        }
+        .gantt-table th {
+            background-color: #e2e8f0;
+            font-weight: 600;
+            color: #475569;
+        }
+        .gantt-table td {
+            background-color: #f8fafc;
+        }
+        .gantt-bar {
+            width: 80%;
+            height: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .phase-header {
+            background-color: #cbd5e1; /* Medium gray */
+            color: #1e293b; /* Darker slate */
+            font-weight: 700;
+            text-align: left;
+            padding-left: 1rem;
+        }
+        .schema-table th, .schema-table td {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .schema-table th {
+            background-color: #eff6ff; /* Light blue */
+            font-weight: 600;
+            color: #2563eb; /* Blue text */
+        }
+        .schema-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="text-center mb-8">
+            <div class="flex justify-end mb-4">
+                <select id="language-selector" class="p-2 rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="en">English</option>
+                    <option value="sv">Svenska</option>
+                    <option value="fi">Suomi</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                    <option value="ja-romaji">Japanese (Romaji)</option>
+                    <option value="ja-kanji">Japanese (Kanji)</option>
+                </select>
+            </div>
+            <h1 class="text-5xl font-bold text-indigo-700 mb-4 rounded-xl p-4 bg-gradient-to-r from-indigo-100 to-purple-100 shadow-lg">
+                <span class="mr-2">✨</span> <span data-key="main_title">Akashic Brain Project Dashboard</span> <span class="ml-2">✨</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-4" data-key="welcome_message">
+                Welcome, noble Architect! Behold the strategic overview of your quest to forge the ultimate Notion 'Second Brain'!
+            </p>
+            <p class="text-xl font-medium text-purple-700" data-key="open_source_tagline">
+                <span class="mr-2">🌍</span> An Open Source Initiative: Collaborate, Use, and Pass Forward!
+            </p>
+        </header>
+
+        <!-- Call to Action for Collaboration -->
+        <section class="card text-center">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="join_expedition_title">
+                <span class="mr-2">🤝</span> Join the Expedition!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6" data-key="join_expedition_text">
+                This project thrives on community spirit! We invite fellow adventurers to collaborate, utilize, and enhance this "Second Brain" framework. Your contributions can help others on their quest for ultimate productivity!
+            </p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://github.com/your-project/second-brain" target="_blank" class="cta-button bg-gray-800 text-white hover:bg-gray-700">
+                    <i class="fab fa-github mr-2"></i> <span data-key="btn_github">Contribute on GitHub</span>
+                </a>
+                <a href="#database-schemas" class="cta-button bg-blue-600 text-white hover:bg-blue-500">
+                    <i class="fas fa-book mr-2"></i> <span data-key="btn_docs">Explore Documentation</span>
+                </a>
+                <a href="#" class="cta-button bg-purple-600 text-white hover:bg-purple-500">
+                    <i class="fas fa-users mr-2"></i> <span data-key="btn_community">Join the Community</span>
+                </a>
+                <a href="#" class="cta-button bg-yellow-500 text-gray-800 hover:bg-yellow-400">
+                    <i class="fas fa-share-alt mr-2"></i> <span data-key="btn_share">Share & Spread the Word</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Unleashing Potential Section -->
+        <section class="card">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="unleash_potential_title">
+                <span class="mr-2">💡</span> The Power of the Mind: Unleashing Human Potential
+            </h2>
+            <p class="text-lg text-gray-700 mb-4" data-key="unleash_potential_text1">
+                In the grand saga of self-mastery, the ability to **capture and organize your thoughts and ideas** is your most potent spell. Your "Second Brain" is not merely a system; it's a catalyst! It transforms fleeting inspirations into concrete plans, scattered knowledge into profound insights, and daily actions into a focused march towards your grandest aspirations.
+            </p>
+            <p class="text-lg text-gray-700" data-key="unleash_potential_text2">
+                By externalizing your mental landscape, you free your mind to innovate, to strategize, and to truly **unleash your boundless human potential**. Each data point captured is a seed planted, destined to grow into a forest of wisdom and achievement!
+            </p>
+        </section>
+
+        <!-- Project Summary Section -->
+        <section class="card">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="project_summary_title">
+                <span class="mr-2">📊</span> Project Summary: The Grand Vision
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr class="bg-indigo-500 text-white">
+                            <th class="py-3 px-4 rounded-tl-lg" data-key="summary_th_day">Day</th>
+                            <th class="py-3 px-4" data-key="summary_th_focus">Focus</th>
+                            <th class="py-3 px-4 rounded-tr-lg" data-key="summary_th_hours">Estimated Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 1</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d1">Core Schema & Relationships</td><td class="py-2 px-4 border-b border-indigo-200">5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 2</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d2">Data Flow Testing</td><td class="py-2 px-4 border-b border-indigo-200">4h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 3</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d3">Templates for Capture</td><td class="py-2 px-4 border-b border-indigo-200">3.5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 4</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d4">Dashboards & Views</td><td class="py-2 px-4 border-b border-indigo-200">3.5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 5</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d5">Automations Setup</td><td class="py-2 px-4 border-b border-indigo-200">2.5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 6</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d6">Sentiment & Topics</td><td class="py-2 px-4 border-b border-indigo-200">2.5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 7</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d7">Connections & Timelines</td><td class="py-2 px-4 border-b border-indigo-200">2.5h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 8</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d8">Context Modeling</td><td class="py-2 px-4 border-b border-indigo-200">2h</td></tr>
+                        <tr><td class="py-2 px-4 border-b border-indigo-200">Day 9</td><td class="py-2 px-4 border-b border-indigo-200" data-key="summary_focus_d9">Interface Polish</td><td class="py-2 px-4 border-b border-indigo-200">2.5h</td></tr>
+                        <tr><td class="py-2 px-4">Day 10</td><td class="py-2 px-4" data-key="summary_focus_d10">Export & Review</td><td class="py-2 px-4">1.5h</td></tr>
+                        <tr class="bg-indigo-100 font-semibold text-indigo-800"><td class="py-2 px-4 rounded-bl-lg" data-key="summary_total">Total:</td><td class="py-2 px-4"></td><td class="py-2 px-4 rounded-br-lg">30.5 hours</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- GANTT Timeline Visualization Section -->
+        <section class="card">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="gantt_timeline_title">
+                <span class="mr-2">📅</span> Project Timeline: The Daily March
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="gantt-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="w-1/4" data-key="gantt_th_activity">Activity</th>
+                            <th>D1</th>
+                            <th>D2</th>
+                            <th>D3</th>
+                            <th>D4</th>
+                            <th>D5</th>
+                            <th>D6</th>
+                            <th>D7</th>
+                            <th>D8</th>
+                            <th>D9</th>
+                            <th>D10</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Phase 1: Foundations -->
+                        <tr>
+                            <td colspan="11" class="phase-header text-left" data-key="phase1_title">
+                                <span class="mr-2">🛠️</span> Phase 1: Foundations
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d1">Core Schema & Relationships</td>
+                            <td><div class="gantt-bar bg-blue-500"></div></td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d2">Data Flow Testing</td>
+                            <td></td>
+                            <td><div class="gantt-bar bg-blue-500"></div></td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <!-- Phase 2: Templates & Automation -->
+                        <tr>
+                            <td colspan="11" class="phase-header text-left" data-key="phase2_title">
+                                <span class="mr-2">⚙️</span> Phase 2: Templates & Automation
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d3">Templates for Capture</td>
+                            <td></td><td></td>
+                            <td><div class="gantt-bar bg-green-500"></div></td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d4">Dashboards & Views</td>
+                            <td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-green-500"></div></td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d5">Automations Setup</td>
+                            <td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-green-500"></div></td>
+                            <td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <!-- Phase 3: Intelligence Layer -->
+                        <tr>
+                            <td colspan="11" class="phase-header text-left" data-key="phase3_title">
+                                <span class="mr-2">🧠</span> Phase 3: Intelligence Layer
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d6">Sentiment & Topics</td>
+                            <td></td><td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-purple-500"></div></td>
+                            <td></td><td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d7">Connections & Timelines</td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-purple-500"></div></td>
+                            <td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d8">Context Modeling</td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-purple-500"></div></td>
+                            <td></td><td></td>
+                        </tr>
+                        <!-- Phase 4: Refinement & Aesthetics -->
+                        <tr>
+                            <td colspan="11" class="phase-header text-left" data-key="phase4_title">
+                                <span class="mr-2">🎨</span> Phase 4: Refinement & Aesthetics
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d9">Interface Polish</td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-yellow-500"></div></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" data-key="gantt_activity_d10">Export & Review</td>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td><div class="gantt-bar bg-yellow-500"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Database Schema Section -->
+        <section class="card" id="database-schemas">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="db_schemas_title">
+                <span class="mr-2">📚</span> Database Schemas: The Foundation Stones
+            </h2>
+
+            <!-- Chronos Ledger: Data Points -->
+            <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6" data-key="db_data_points_title">
+                <span class="mr-2">🛡️</span> I. Chronos Ledger: Data Points
+            </h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="schema-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th data-key="schema_th_field">Field Name</th>
+                            <th data-key="schema_th_type">Type</th>
+                            <th data-key="schema_th_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ID</td><td>`Formula`/`Text`</td><td data-key="dp_desc_id">A unique identifier for each individual data point.</td></tr>
+                        <tr><td>Timestamp</td><td>`Date` (with time)</td><td data-key="dp_desc_timestamp">The exact date and time the data point was created or recorded.</td></tr>
+                        <tr><td>WeekDay</td><td>`Formula`</td><td data-key="dp_desc_weekday">The day of the week derived automatically from the `Timestamp`.</td></tr>
+                        <tr><td>Title</td><td>`Title`</td><td data-key="dp_desc_title">A concise, primary headline or summary for the data point.</td></tr>
+                        <tr><td>Raw Text</td><td>`Text` / `Page Content`</td><td data-key="dp_desc_raw_text">The complete, unedited content, notes, or detailed information.</td></tr>
+                        <tr><td>Topics</td><td>`Multi-Select`</td><td data-key="dp_desc_topics">Broad, overarching categories or themes the data point belongs to.</td></tr>
+                        <tr><td>Sentiments</td><td>`Select` / `Emoji`</td><td data-key="dp_desc_sentiments">The emotional tone or feeling associated with the data point.</td></tr>
+                        <tr><td>Labels</td><td>`Multi-Select`</td><td data-key="dp_desc_labels">More specific tags or keywords for detailed classification.</td></tr>
+                        <tr><td>Connections</td><td>`Relation` (self)</td><td data-key="dp_desc_connections">Links to other related data points within the `Chronos Ledger` itself.</td></tr>
+                        <tr><td>Previous Data Point</td><td>`Relation` (self)</td><td data-key="dp_desc_prev_dp">Links to the immediately preceding data point in chronological order.</td></tr>
+                        <tr><td>Previous Context</td><td>`Rollup`</td><td data-key="dp_desc_prev_context">A brief snippet or title pulled from the `Previous Data Point`.</td></tr>
+                        <tr><td>Possible Next Data Point</td><td>`Relation` (self)</td><td data-key="dp_desc_next_dp">A link to a planned or anticipated future data point.</td></tr>
+                        <tr><td>Possible Next Context</td><td>`Text`</td><td data-key="dp_desc_next_context">A note about the expected context or content of the next planned data point.</td></tr>
+                        <tr><td>Possible Next Steps</td><td>`Text`</td><td data-key="dp_desc_next_steps">Actionable items or immediate steps identified from this data point.</td></tr>
+                        <tr><td>Action Chosen</td><td>`Select` / `Status`</td><td data-key="dp_desc_action_chosen">The specific action or decision taken if multiple next steps were possible.</td></tr>
+                        <tr><td>Week Relation</td><td>`Relation` to `Weeks`</td><td data-key="dp_desc_week_rel">Links this data point to the specific week it belongs to.</td></tr>
+                        <tr><td>Date Relation</td><td>`Relation` to `Date`</td><td data-key="dp_desc_date_rel">Links this data point to the specific calendar date it belongs to.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Weekly Chronicle: Weeks Database -->
+            <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6" data-key="db_weeks_title">
+                <span class="mr-2">🗓️</span> II. The Weekly Chronicle: Weeks Database
+            </h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="schema-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th data-key="schema_th_field">Field Name</th>
+                            <th data-key="schema_th_type">Type</th>
+                            <th data-key="schema_th_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Week ID</td><td>`Title`</td><td data-key="week_desc_id">A unique identifier for the week.</td></tr>
+                        <tr><td>Start Date</td><td>`Date`</td><td data-key="week_desc_start_date">The calendar start date of the week.</td></tr>
+                        <tr><td>End Date</td><td>`Date`</td><td data-key="week_desc_end_date">The calendar end date of the week.</td></tr>
+                        <tr><td>Quarter Relation</td><td>`Relation` to `Quarters`</td><td data-key="week_desc_quarter_rel">Links this week to its parent quarter.</td></tr>
+                        <tr><td>Total Data Points</td><td>`Rollup`</td><td data-key="week_desc_total_dp">Counts the number of data points linked to this week.</td></tr>
+                        <tr><td>Weekly Goals</td><td>`Text`</td><td data-key="week_desc_goals">Your key objectives or focus areas for the week.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Quarterly Campaign: Quarters Database -->
+            <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6" data-key="db_quarters_title">
+                <span class="mr-2">🧭</span> III. The Quarterly Campaign: Quarters Database
+            </h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="schema-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th data-key="schema_th_field">Field Name</th>
+                            <th data-key="schema_th_type">Type</th>
+                            <th data-key="schema_th_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Quarter ID</td><td>`Title`</td><td data-key="quarter_desc_id">A unique identifier for the quarter.</td></tr>
+                        <tr><td>Start Date</td><td>`Date`</td><td data-key="quarter_desc_start_date">The calendar start date of the quarter.</td></tr>
+                        <tr><td>End Date</td><td>`Date`</td><td data-key="quarter_desc_end_date">The calendar end date of the quarter.</td></tr>
+                        <tr><td>Year Relation</td><td>`Relation` to `Years`</td><td data-key="quarter_desc_year_rel">Links this quarter to its parent year.</td></tr>
+                        <tr><td>Weeks Relation</td><td>`Relation` to `Weeks`</td><td data-key="quarter_desc_weeks_rel">Links to all 13 weeks within this quarter.</td></tr>
+                        <tr><td>Total Data Points</td><td>`Rollup`</td><td data-key="quarter_desc_total_dp">Sums the `Total Data Points` from all linked weeks.</td></tr>
+                        <tr><td>Quarterly Goals</td><td>`Text`</td><td data-key="quarter_desc_goals">Your overarching objectives and focus areas for the quarter.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Annual Saga: Years Database -->
+            <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6" data-key="db_years_title">
+                <span class="mr-2">🌐</span> IV. The Annual Saga: Years Database
+            </h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="schema-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th data-key="schema_th_field">Field Name</th>
+                            <th data-key="schema_th_type">Type</th>
+                            <th data-key="schema_th_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Year</td><td>`Title`</td><td data-key="year_desc_id">The four-digit year.</td></tr>
+                        <tr><td>Start Date</td><td>`Date`</td><td data-key="year_desc_start_date">The calendar start date of the year.</td></tr>
+                        <tr><td>End Date</td><td>`Date`</td><td data-key="year_desc_end_date">The calendar end date of the year.</td></tr>
+                        <tr><td>Quarters Relation</td><td>`Relation` to `Quarters`</td><td data-key="year_desc_quarters_rel">Links to all four quarters within this year.</td></tr>
+                        <tr><td>Total Data Points</td><td>`Rollup`</td><td data-key="year_desc_total_dp">Sums the `Total Data Points` from all linked quarters.</td></tr>
+                        <tr><td>Yearly Goals</td><td>`Text`</td><td data-key="year_desc_goals">Your grand vision and major goals for the entire year.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grand Almanac: Date Table -->
+            <h3 class="text-2xl font-medium text-gray-700 mb-4 mt-6" data-key="db_date_title">
+                <span class="mr-2">📅</span> V. The Grand Almanac: Date Table
+            </h3>
+            <div class="overflow-x-auto mb-8">
+                <table class="schema-table min-w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th data-key="schema_th_field">Field Name</th>
+                            <th data-key="schema_th_type">Type</th>
+                            <th data-key="schema_th_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Date</td><td>`Title` (Date property)</td><td data-key="date_desc_date">The actual calendar date for each entry.</td></tr>
+                        <tr><td>Day of Week Name</td><td>`Formula`</td><td data-key="date_desc_day_name">The full name of the day of the week.</td></tr>
+                        <tr><td>Day of Week Number</td><td>`Formula`</td><td data-key="date_desc_day_num">The numerical representation of the day of the week.</td></tr>
+                        <tr><td>Day of Month</td><td>`Formula`</td><td data-key="date_desc_day_month">The day number within its month.</td></tr>
+                        <tr><td>Week Number</td><td>`Formula`</td><td data-key="date_desc_week_num">The ISO week number of the year.</td></tr>
+                        <tr><td>Month Name</td><td>`Formula`</td><td data-key="date_desc_month_name">The full name of the month.</td></tr>
+                        <tr><td>Month Number</td><td>`Formula`</td><td data-key="date_desc_month_num">The numerical representation of the month.</td></tr>
+                        <tr><td>Quarter Name</td><td>`Formula`</td><td data-key="date_desc_quarter_name">The Quarter name (e.g., Q1, Q2, Q3, Q4).</td></tr>
+                        <tr><td>Year</td><td>`Formula`</td><td data-key="date_desc_year">The four-digit year.</td></tr>
+                        <tr><td>Is Weekend?</td><td>`Checkbox`</td><td data-key="date_desc_is_weekend">Marks if the date falls on a weekend.</td></tr>
+                        <tr><td>Is Holiday?</td><td>`Checkbox`</td><td data-key="date_desc_is_holiday">Custom marker for public or personal holidays.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Scientific Background Section -->
+        <section class="card">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-300" data-key="scientific_background_title">
+                <span class="mr-2">🔬</span> Scientific Background: The Roots of Sovereignty
+            </h2>
+            <p class="text-lg text-gray-700 mb-4" data-key="scientific_background_text1">
+                The concept of a "Second Brain" is deeply rooted in various scientific disciplines, each contributing a vital piece to the puzzle of optimizing human performance and well-being. Understanding these foundations empowers us to build systems that truly resonate with our innate capabilities.
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 ml-4">
+                <li><strong class="text-indigo-600" data-key="cog_eng_title">Cognitive Engineering:</strong> <span data-key="cog_eng_desc">Focuses on designing systems and interfaces that enhance human cognitive abilities, such as memory, attention, and decision-making. A "Second Brain" is a prime example of applying these principles to personal knowledge management.</span></li>
+                <li><strong class="text-indigo-600" data-key="somatics_title">Somatics:</strong> <span data-key="somatics_desc">Explores the mind-body connection and how bodily sensations and movements influence our thoughts and emotions. Integrating somatic awareness into a knowledge system can help contextualize insights with physical states.</span></li>
+                <li><strong class="text-indigo-600" data-key="neuroscience_title">Neuroscience:</strong> <span data-key="neuroscience_desc">Provides insights into how the brain processes, stores, and retrieves information. Understanding neural networks and memory formation informs the optimal structure and retrieval mechanisms of a "Second Brain."</span></li>
+                <li><strong class="text-indigo-600" data-key="biology_title">Biology:</strong> <span data-key="biology_desc">Examines the fundamental biological processes that underpin human existence, including the physiological aspects of learning, stress, and energy management, all of which impact cognitive function.</span></li>
+                <li><strong class="text-indigo-600" data-key="psychology_title">Psychology:</strong> <span data-key="psychology_desc">Offers frameworks for understanding human behavior, motivation, habits, and decision biases. These insights are crucial for designing a "Second Brain" that is not only effective but also enjoyable and sustainable to use.</span></li>
+                <li><strong class="text-indigo-600" data-key="philosophy_title">Philosophy:</strong> <span data-key="philosophy_desc">Delves into fundamental questions about knowledge, existence, and the nature of reality. Philosophical inquiry encourages critical thinking and helps shape the overarching purpose and ethical considerations of knowledge management.</span></li>
+            </ul>
+            <p class="text-lg text-gray-700 mt-6 font-semibold text-center" data-key="convergence_text">
+                All these disciplines converge to illuminate the path towards:
+            </p>
+            <p class="text-4xl font-bold text-purple-700 text-center mt-4 rounded-xl p-4 bg-gradient-to-r from-purple-100 to-indigo-100 shadow-lg" data-key="sovereignty_title">
+                <span class="mr-2">👑</span> Cognitive & Physical Sovereignty <span class="ml-2">👑</span>
+            </p>
+            <p class="text-lg text-gray-700 mt-4 text-center" data-key="sovereignty_desc">
+                Empowering individuals to master their internal world (thoughts, emotions) and external actions (physical well-being, productivity) through a harmonized system of knowledge and self-awareness.
+            </p>
+        </section>
+
+        <footer class="text-center text-gray-500 text-sm mt-8">
+            <p data-key="footer_open_source">
+                <span class="mr-1">✨</span> This project is open source and community-driven. <span class="ml-1">✨</span>
+            </p>
+            <p data-key="footer_copyright">&copy; 2025 <span data-key="project_author">RogeriusX42</span>. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const translations = {
+            "en": {
+                "page_title": "Akashic Brain Project Dashboard",
+                "main_title": "Akashic Brain Project Dashboard",
+                "welcome_message": "Welcome, noble Architect! Behold the strategic overview of your quest to forge the ultimate Notion 'Second Brain'!",
+                "open_source_tagline": "An Open Source Initiative: Collaborate, Use, and Pass Forward!",
+                "join_expedition_title": "🤝 Join the Expedition!",
+                "join_expedition_text": "This project thrives on community spirit! We invite fellow adventurers to collaborate, utilize, and enhance this \"Second Brain\" framework. Your contributions can help others on their quest for ultimate productivity!",
+                "btn_github": "Contribute on GitHub",
+                "btn_docs": "Explore Documentation",
+                "btn_community": "Join the Community",
+                "btn_share": "Share & Spread the Word",
+                "unleash_potential_title": "💡 The Power of the Mind: Unleashing Human Potential",
+                "unleash_potential_text1": "In the grand saga of self-mastery, the ability to **capture and organize your thoughts and ideas** is your most potent spell. Your \"Second Brain\" is not merely a system; it's a catalyst! It transforms fleeting inspirations into concrete plans, scattered knowledge into profound insights, and daily actions into a focused march towards your grandest aspirations.",
+                "unleash_potential_text2": "By externalizing your mental landscape, you free your mind to innovate, to strategize, and to truly **unleash your boundless human potential**. Each data point captured is a seed planted, destined to grow into a forest of wisdom and achievement!",
+                "project_summary_title": "📊 Project Summary: The Grand Vision",
+                "summary_th_day": "Day",
+                "summary_th_focus": "Focus",
+                "summary_th_hours": "Estimated Hours",
+                "summary_focus_d1": "Core Schema & Relationships",
+                "summary_focus_d2": "Data Flow Testing",
+                "summary_focus_d3": "Templates for Capture",
+                "summary_focus_d4": "Dashboards & Views",
+                "summary_focus_d5": "Automations Setup",
+                "summary_focus_d6": "Sentiment & Topics",
+                "summary_focus_d7": "Connections & Timelines",
+                "summary_focus_d8": "Context Modeling",
+                "summary_focus_d9": "Interface Polish",
+                "summary_focus_d10": "Export & Review",
+                "summary_total": "Total:",
+                "gantt_timeline_title": "📅 Project Timeline: The Daily March",
+                "gantt_th_activity": "Activity",
+                "phase1_title": "🛠️ Phase 1: Foundations",
+                "gantt_activity_d1": "Core Schema & Relationships",
+                "gantt_activity_d2": "Data Flow Testing",
+                "phase2_title": "⚙️ Phase 2: Templates & Automation",
+                "gantt_activity_d3": "Templates for Capture",
+                "gantt_activity_d4": "Dashboards & Views",
+                "gantt_activity_d5": "Automations Setup",
+                "phase3_title": "🧠 Phase 3: Intelligence Layer",
+                "gantt_activity_d6": "Sentiment & Topics",
+                "gantt_activity_d7": "Connections & Timelines",
+                "gantt_activity_d8": "Context Modeling",
+                "phase4_title": "🎨 Phase 4: Refinement & Aesthetics",
+                "gantt_activity_d9": "Interface Polish",
+                "gantt_activity_d10": "Export & Review",
+                "db_schemas_title": "📚 Database Schemas: The Foundation Stones",
+                "db_data_points_title": "🛡️ I. Chronos Ledger: Data Points",
+                "schema_th_field": "Field Name",
+                "schema_th_type": "Type",
+                "schema_th_description": "Description",
+                "dp_desc_id": "A unique identifier for each individual data point.",
+                "dp_desc_timestamp": "The exact date and time the data point was created or recorded.",
+                "dp_desc_weekday": "The day of the week derived automatically from the `Timestamp`.",
+                "dp_desc_title": "A concise, primary headline or summary for the data point.",
+                "dp_desc_raw_text": "The complete, unedited content, notes, or detailed information.",
+                "dp_desc_topics": "Broad, overarching categories or themes the data point belongs to.",
+                "dp_desc_sentiments": "The emotional tone or feeling associated with the data point.",
+                "dp_desc_labels": "More specific tags or keywords for detailed classification.",
+                "dp_desc_connections": "Links to other related data points within the `Chronos Ledger` itself.",
+                "dp_desc_prev_dp": "Links to the immediately preceding data point in chronological order.",
+                "dp_desc_prev_context": "A brief snippet or title pulled from the `Previous Data Point`.",
+                "dp_desc_next_dp": "A link to a planned or anticipated future data point.",
+                "dp_desc_next_context": "A note about the expected context or content of the next planned data point.",
+                "dp_desc_next_steps": "Actionable items or immediate steps identified from this data point.",
+                "dp_desc_action_chosen": "The specific action or decision taken if multiple next steps were possible.",
+                "dp_desc_week_rel": "Links this data point to the specific week it belongs to.",
+                "dp_desc_date_rel": "Links this data point to the specific calendar date it belongs to.",
+                "db_weeks_title": "🗓️ II. The Weekly Chronicle: Weeks Database",
+                "week_desc_id": "A unique identifier for the week.",
+                "week_desc_start_date": "The calendar start date of the week.",
+                "week_desc_end_date": "The calendar end date of the week.",
+                "week_desc_quarter_rel": "Links this week to its parent quarter.",
+                "week_desc_total_dp": "Counts the number of data points linked to this week.",
+                "week_desc_goals": "Your key objectives or focus areas for the week.",
+                "db_quarters_title": "🧭 III. The Quarterly Campaign: Quarters Database",
+                "quarter_desc_id": "A unique identifier for the quarter.",
+                "quarter_desc_start_date": "The calendar start date of the quarter.",
+                "quarter_desc_end_date": "The calendar end date of the quarter.",
+                "quarter_desc_year_rel": "Links this quarter to its parent year.",
+                "quarter_desc_weeks_rel": "Links to all 13 weeks within this quarter.",
+                "quarter_desc_total_dp": "Sums the `Total Data Points` from all linked weeks.",
+                "quarter_desc_goals": "Your overarching objectives and focus areas for the quarter.",
+                "db_years_title": "🌐 IV. The Annual Saga: Years Database",
+                "year_desc_id": "The four-digit year.",
+                "year_desc_start_date": "The calendar start date of the year.",
+                "year_desc_end_date": "The calendar end date of the year.",
+                "year_desc_quarters_rel": "Links to all four quarters within this year.",
+                "year_desc_total_dp": "Sums the `Total Data Points` from all linked quarters.",
+                "year_desc_goals": "Your grand vision and major goals for the entire year.",
+                "db_date_title": "📅 V. The Grand Almanac: Date Table",
+                "date_desc_date": "The actual calendar date for each entry.",
+                "date_desc_day_name": "The full name of the day of the week.",
+                "date_desc_day_num": "The numerical representation of the day of the week.",
+                "date_desc_day_month": "The day number within its month.",
+                "date_desc_week_num": "The ISO week number of the year.",
+                "date_desc_month_name": "The full name of the month.",
+                "date_desc_month_num": "The numerical representation of the month.",
+                "date_desc_quarter_name": "The Quarter name (e.g., Q1, Q2, Q3, Q4).",
+                "date_desc_year": "The four-digit year.",
+                "date_desc_is_weekend": "Marks if the date falls on a weekend.",
+                "date_desc_is_holiday": "Custom marker for public or personal holidays.",
+                "scientific_background_title": "🔬 Scientific Background: The Roots of Sovereignty",
+                "scientific_background_text1": "The concept of a \"Second Brain\" is deeply rooted in various scientific disciplines, each contributing a vital piece to the puzzle of optimizing human performance and well-being. Understanding these foundations empowers us to build systems that truly resonate with our innate capabilities.",
+                "cog_eng_title": "Cognitive Engineering:",
+                "cog_eng_desc": "Focuses on designing systems and interfaces that enhance human cognitive abilities, such as memory, attention, and decision-making. A \"Second Brain\" is a prime example of applying these principles to personal knowledge management.",
+                "somatics_title": "Somatics:",
+                "somatics_desc": "Explores the mind-body connection and how bodily sensations and movements influence our thoughts and emotions. Integrating somatic awareness into a knowledge system can help contextualize insights with physical states.",
+                "neuroscience_title": "Neuroscience:",
+                "neuroscience_desc": "Provides insights into how the brain processes, stores, and retrieves information. Understanding neural networks and memory formation informs the optimal structure and retrieval mechanisms of a \"Second Brain.\"",
+                "biology_title": "Biology:",
+                "biology_desc": "Examines the fundamental biological processes that underpin human existence, including the physiological aspects of learning, stress, and energy management, all of which impact cognitive function.",
+                "psychology_title": "Psychology:",
+                "psychology_desc": "Offers frameworks for understanding human behavior, motivation, habits, and decision biases. These insights are crucial for designing a \"Second Brain\" that is not only effective but also enjoyable and sustainable to use.",
+                "philosophy_title": "Philosophy:",
+                "philosophy_desc": "Delves into fundamental questions about knowledge, existence, and the nature of reality. Philosophical inquiry encourages critical thinking and helps shape the overarching purpose and ethical considerations of knowledge management.",
+                "convergence_text": "All these disciplines converge to illuminate the path towards:",
+                "sovereignty_title": "👑 Cognitive & Physical Sovereignty",
+                "sovereignty_desc": "Empowering individuals to master their internal world (thoughts, emotions) and external actions (physical well-being, productivity) through a harmonized system of knowledge and self-awareness.",
+                "footer_open_source": "✨ This project is open source and community-driven. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. All rights reserved."
+            },
+            "sv": {
+                "page_title": "Akashic Brain Projektdashboard",
+                "main_title": "Akashic Brain Projektdashboard",
+                "welcome_message": "Välkommen, ädle Arkitekt! Se den strategiska översikten av din strävan att smida den ultimata Notion 'Andra Hjärnan'!",
+                "open_source_tagline": "Ett Öppet Källkodsinitiativ: Samarbeta, Använd och För Vidare!",
+                "join_expedition_title": "🤝 Gå med i Expeditionen!",
+                "join_expedition_text": "Detta projekt frodas av gemenskapsanda! Vi inbjuder andra äventyrare att samarbeta, använda och förbättra detta \"Andra Hjärnan\"-ramverk. Dina bidrag kan hjälpa andra på deras strävan efter ultimat produktivitet!",
+                "btn_github": "Bidra på GitHub",
+                "btn_docs": "Utforska Dokumentation",
+                "btn_community": "Gå med i Gemenskapen",
+                "btn_share": "Dela & Sprid Ordet",
+                "unleash_potential_title": "💡 Sinneskraften: Släpp Loss Mänsklig Potential",
+                "unleash_potential_text1": "I den stora sagan om självbehärskning är förmågan att **fånga och organisera dina tankar och idéer** din mest potenta besvärjelse. Din \"Andra Hjärnan\" är inte bara ett system; det är en katalysator! Den förvandlar flyktiga inspirationer till konkreta planer, spridd kunskap till djupa insikter, och dagliga handlingar till en fokuserad marsch mot dina största ambitioner.",
+                "unleash_potential_text2": "Genom att externalisera ditt mentala landskap frigör du ditt sinne att innovera, att strategisera, och att verkligen **släppa loss din gränslösa mänskliga potential**. Varje infångad datapunkt är ett planterat frö, avsett att växa till en skog av visdom och prestation!",
+                "project_summary_title": "📊 Projektsammanfattning: Den Stora Visionen",
+                "summary_th_day": "Dag",
+                "summary_th_focus": "Fokus",
+                "summary_th_hours": "Uppskattade Timmar",
+                "summary_focus_d1": "Kärnschema & Relationer",
+                "summary_focus_d2": "Dataflödestestning",
+                "summary_focus_d3": "Mallar för Infångning",
+                "summary_focus_d4": "Dashboards & Vyer",
+                "summary_focus_d5": "Automationsinställning",
+                "summary_focus_d6": "Känsla & Ämnen",
+                "summary_focus_d7": "Anslutningar & Tidslinjer",
+                "summary_focus_d8": "Kontextmodellering",
+                "summary_focus_d9": "Gränssnittspolering",
+                "summary_focus_d10": "Export & Granskning",
+                "summary_total": "Totalt:",
+                "gantt_timeline_title": "📅 Projekttidslinje: Den Dagliga Marschen",
+                "gantt_th_activity": "Aktivitet",
+                "phase1_title": "🛠️ Fas 1: Grunderna",
+                "gantt_activity_d1": "Kärnschema & Relationer",
+                "gantt_activity_d2": "Dataflödestestning",
+                "phase2_title": "⚙️ Fas 2: Mallar & Automation",
+                "gantt_activity_d3": "Mallar för Infångning",
+                "gantt_activity_d4": "Dashboards & Vyer",
+                "gantt_activity_d5": "Automationsinställning",
+                "phase3_title": "🧠 Fas 3: Intelligenslager",
+                "gantt_activity_d6": "Känsla & Ämnen",
+                "gantt_activity_d7": "Anslutningar & Tidslinjer",
+                "gantt_activity_d8": "Kontextmodellering",
+                "phase4_title": "🎨 Fas 4: Förfining & Estetik",
+                "gantt_activity_d9": "Gränssnittspolering",
+                "gantt_activity_d10": "Export & Granskning",
+                "db_schemas_title": "📚 Databasscheman: Grundstenarna",
+                "db_data_points_title": "🛡️ I. Chronos Ledger: Datapunkter",
+                "schema_th_field": "Fältnamn",
+                "schema_th_type": "Typ",
+                "schema_th_description": "Beskrivning",
+                "dp_desc_id": "En unik identifierare för varje individuell datapunkt.",
+                "dp_desc_timestamp": "Exakt datum och tid då datapunkten skapades eller registrerades.",
+                "dp_desc_weekday": "Veckodagen som automatiskt härleds från `Timestamp`.",
+                "dp_desc_title": "En kortfattad, primär rubrik eller sammanfattning för datapunkten.",
+                "dp_desc_raw_text": "Det fullständiga, oredigerade innehållet, anteckningar eller detaljerad information.",
+                "dp_desc_topics": "Breda, övergripande kategorier eller teman som datapunkten tillhör.",
+                "dp_desc_sentiments": "Den känslomässiga tonen eller känslan som är associerad med datapunkten.",
+                "dp_desc_labels": "Mer specifika taggar eller nyckelord för detaljerad klassificering.",
+                "dp_desc_connections": "Länkar till andra relaterade datapunkter inom `Chronos Ledger` själv.",
+                "dp_desc_prev_dp": "Länkar till den omedelbart föregående datapunkten i kronologisk ordning.",
+                "dp_desc_prev_context": "Ett kort utdrag eller titel hämtad från `Previous Data Point`.",
+                "dp_desc_next_dp": "En länk till en planerad eller förväntad framtida datapunkt.",
+                "dp_desc_next_context": "En anteckning om den förväntade kontexten eller innehållet i nästa planerade datapunkt.",
+                "dp_desc_next_steps": "Åtgärdbara objekt eller omedelbara nästa steg identifierade från denna datapunkt.",
+                "dp_desc_action_chosen": "Den specifika åtgärden eller beslutet som fattades om flera nästa steg var möjliga.",
+                "dp_desc_week_rel": "Länkar denna datapunkt till den specifika vecka den tillhör.",
+                "dp_desc_date_rel": "Länkar denna datapunkt till det specifika kalenderdatum den tillhör.",
+                "db_weeks_title": "🗓️ II. Veckokrönikan: Veckodatabasen",
+                "week_desc_id": "En unik identifierare för veckan.",
+                "week_desc_start_date": "Veckans kalenderstartdatum.",
+                "week_desc_end_date": "Veckans kalenderslutdatum.",
+                "week_desc_quarter_rel": "Länkar denna vecka till dess överordnade kvartal.",
+                "week_desc_total_dp": "Räknar antalet datapunkter som är länkade till denna vecka.",
+                "week_desc_goals": "Dina nyckelmål eller fokusområden för veckan.",
+                "db_quarters_title": "🧭 III. Kvartalskampanjen: Kvartalsdatabasen",
+                "quarter_desc_id": "En unik identifierare för kvartalet.",
+                "quarter_desc_start_date": "Kvartalets kalenderstartdatum.",
+                "quarter_desc_end_date": "Kvartalets kalenderslutdatum.",
+                "quarter_desc_year_rel": "Länkar detta kvartal till dess överordnade år.",
+                "quarter_desc_weeks_rel": "Länkar till alla 13 veckor inom detta kvartal.",
+                "quarter_desc_total_dp": "Summerar `Total Data Points` från alla länkade veckor.",
+                "quarter_desc_goals": "Dina övergripande mål och fokusområden för kvartalet.",
+                "db_years_title": "🌐 IV. Årssagan: Årsdatabasen",
+                "year_desc_id": "Det fyrsiffriga året.",
+                "year_desc_start_date": "Årets kalenderstartdatum.",
+                "year_desc_end_date": "Årets kalenderslutdatum.",
+                "year_desc_quarters_rel": "Länkar till alla fyra kvartal inom detta år.",
+                "year_desc_total_dp": "Summerar `Total Data Points` från alla länkade kvartal.",
+                "year_desc_goals": "Din stora vision och huvudmål för hela året.",
+                "db_date_title": "📅 V. Den Stora Almanackan: Datumtabellen",
+                "date_desc_date": "Det faktiska kalenderdatumet för varje post.",
+                "date_desc_day_name": "Det fullständiga namnet på veckodagen.",
+                "date_desc_day_num": "Den numeriska representationen av veckodagen.",
+                "date_desc_day_month": "Dagen i månaden.",
+                "date_desc_week_num": "ISO-veckonumret för året.",
+                "date_desc_month_name": "Månadens fullständiga namn.",
+                "date_desc_month_num": "Månadens numeriska representation.",
+                "date_desc_quarter_name": "Kvartalets namn (t.ex. Q1, Q2, Q3, Q4).",
+                "date_desc_year": "Det fyrsiffriga året.",
+                "date_desc_is_weekend": "Markerar om datumet infaller på en helg.",
+                "date_desc_is_holiday": "Anpassad markör för allmänna eller personliga helgdagar.",
+                "scientific_background_title": "🔬 Vetenskaplig Bakgrund: Suveränitetens Rötter",
+                "scientific_background_text1": "Konceptet \"Andra Hjärnan\" är djupt rotat i olika vetenskapliga discipliner, som var och en bidrar med en viktig del till pusslet med att optimera mänsklig prestation och välbefinnande. Att förstå dessa grunder ger oss möjlighet att bygga system som verkligen överensstämmer med våra inneboende förmågor.",
+                "cog_eng_title": "Kognitiv Teknik:",
+                "cog_eng_desc": "Fokuserar på att designa system och gränssnitt som förbättrar mänskliga kognitiva förmågor, såsom minne, uppmärksamhet och beslutsfattande. En \"Andra Hjärnan\" är ett utmärkt exempel på att tillämpa dessa principer på personlig kunskapshantering.",
+                "somatics_title": "Somatik:",
+                "somatics_desc": "Utforskar sambandet mellan sinne och kropp och hur kroppsliga förnimmelser och rörelser påverkar våra tankar och känslor. Att integrera somatisk medvetenhet i ett kunskapssystem kan hjälpa till att kontextualisera insikter med fysiska tillstånd.",
+                "neuroscience_title": "Neurovetenskap:",
+                "neuroscience_desc": "Ger insikter i hur hjärnan bearbetar, lagrar och hämtar information. Att förstå neurala nätverk och minnesbildning informerar om den optimala strukturen och hämtningsmekanismerna för en \"Andra Hjärnan.\"",
+                "biology_title": "Biologi:",
+                "biology_desc": "Undersöker de grundläggande biologiska processerna som ligger till grund för mänsklig existens, inklusive de fysiologiska aspekterna av lärande, stress och energihantering, som alla påverkar kognitiv funktion.",
+                "psychology_title": "Psykologi:",
+                "psychology_desc": "Erbjuder ramverk för att förstå mänskligt beteende, motivation, vanor och beslutsfördomar. Dessa insikter är avgörande för att designa en \"Andra Hjärnan\" som inte bara är effektiv utan också njutbar och hållbar att använda.",
+                "philosophy_title": "Filosofi:",
+                "philosophy_desc": "Fördjupar sig i grundläggande frågor om kunskap, existens och verklighetens natur. Filosofisk undersökning uppmuntrar kritiskt tänkande och hjälper till att forma det övergripande syftet och de etiska övervägandena för kunskapshantering.",
+                "convergence_text": "Alla dessa discipliner konvergerar för att belysa vägen mot:",
+                "sovereignty_title": "👑 Kognitiv & Fysisk Suveränitet",
+                "sovereignty_desc": "Att stärka individer att bemästra sin inre värld (tankar, känslor) och yttre handlingar (fysiskt välbefinnande, produktivitet) genom ett harmoniserat system av kunskap och självmedvetenhet.",
+                "footer_open_source": "✨ Detta projekt är öppet källkod och samhällsdrivet. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. Alla rättigheter förbehållna."
+            },
+            "fi": {
+                "page_title": "Akashic Brain Projektin Hallintapaneeli",
+                "main_title": "Akashic Brain Projektin Hallintapaneeli",
+                "welcome_message": "Tervetuloa, jalo Arkkitehti! Katso strateginen yleiskatsaus pyrkimyksestäsi luoda lopullinen Notion 'Toinen Aivot'!",
+                "open_source_tagline": "Avoin Lähdekoodi -aloite: Tee Yhteistyötä, Käytä ja Vie Eteenpäin!",
+                "join_expedition_title": "🤝 Liity Retkikuntaan!",
+                "join_expedition_text": "Tämä projekti kukoistaa yhteishengestä! Kutsumme seikkailijoita tekemään yhteistyötä, hyödyntämään ja parantamaan tätä \"Toinen Aivot\" -kehystä. Panoksesi voivat auttaa muita heidän pyrkimyksessään kohti äärimmäistä tuottavuutta!",
+                "btn_github": "Osallistu GitHubissa",
+                "btn_docs": "Tutustu Dokumentaatioon",
+                "btn_community": "Liity Yhteisöön",
+                "btn_share": "Jaa & Levitä Sanaa",
+                "unleash_potential_title": "💡 Mielen Voima: Ihmisen Potentiaalin Vapauttaminen",
+                "unleash_potential_text1": "Itsensä hallitsemisen suuressa saagassa kyky **vangita ja järjestää ajatuksesi ja ideasi** on tehokkain loitsusi. Sinun \"Toinen Aivot\" ei ole vain järjestelmä; se on katalyytti! Se muuttaa ohikiitävät inspiraatiot konkreettisiksi suunnitelmiksi, hajallaan olevan tiedon syvällisiksi oivalluksiksi ja päivittäiset toimet keskittyneeksi marssiksi kohti suurimpia tavoitteitasi.",
+                "unleash_potential_text2": "Ulkoistamalla mielesi maiseman vapautat mielesi innovoimaan, strategisoimaan ja todella **vapauttamaan rajattoman inhimillisen potentiaalisi**. Jokainen vangittu datapiste on istutettu siemen, joka on tarkoitettu kasvamaan viisauden ja saavutusten metsäksi!",
+                "project_summary_title": "📊 Projektin Yhteenveto: Suuri Visio",
+                "summary_th_day": "Päivä",
+                "summary_th_focus": "Fokus",
+                "summary_th_hours": "Arvioidut Tunnit",
+                "summary_focus_d1": "Ydinskeema & Suhteet",
+                "summary_focus_d2": "Tietovirran Testaus",
+                "summary_focus_d3": "Mallit Tiedonkeruuseen",
+                "summary_focus_d4": "Hallintapaneelit & Näkymät",
+                "summary_focus_d5": "Automaatioiden Asetus",
+                "summary_focus_d6": "Tunne & Aiheet",
+                "summary_focus_d7": "Yhteydet & Aikajanat",
+                "summary_focus_d8": "Kontekstimallinnus",
+                "summary_focus_d9": "Käyttöliittymän Viimeistely",
+                "summary_focus_d10": "Vienti & Tarkistus",
+                "summary_total": "Yhteensä:",
+                "gantt_timeline_title": "📅 Projektin Aikajana: Päivittäinen Marssi",
+                "gantt_th_activity": "Aktiviteetti",
+                "phase1_title": "🛠️ Vaihe 1: Perustat",
+                "gantt_activity_d1": "Ydinskeema & Suhteet",
+                "gantt_activity_d2": "Tietovirran Testaus",
+                "phase2_title": "⚙️ Vaihe 2: Mallit & Automaatio",
+                "gantt_activity_d3": "Mallit Tiedonkeruuseen",
+                "gantt_activity_d4": "Hallintapaneelit & Näkymät",
+                "gantt_activity_d5": "Automaatioiden Asetus",
+                "phase3_title": "🧠 Vaihe 3: Älykkyyskerros",
+                "gantt_activity_d6": "Tunne & Aiheet",
+                "gantt_activity_d7": "Yhteydet & Aikajanat",
+                "gantt_activity_d8": "Kontekstimallinnus",
+                "phase4_title": "🎨 Vaihe 4: Viimeistely & Estetiikka",
+                "gantt_activity_d9": "Käyttöliittymän Viimeistely",
+                "gantt_activity_d10": "Vienti & Tarkistus",
+                "db_schemas_title": "📚 Tietokantaskeemät: Peruskivet",
+                "db_data_points_title": "🛡️ I. Chronos Ledger: Datapisteet",
+                "schema_th_field": "Kentän Nimi",
+                "schema_th_type": "Tyyppi",
+                "schema_th_description": "Kuvaus",
+                "dp_desc_id": "Jokaisen yksittäisen datapisteen yksilöllinen tunniste.",
+                "dp_desc_timestamp": "Tarkka päivämäärä ja aika, jolloin datapiste luotiin tai tallennettiin.",
+                "dp_desc_weekday": "Viikonpäivä, joka johdetaan automaattisesti `Timestamp`-kentästä.",
+                "dp_desc_title": "Lyhyt, ensisijainen otsikko tai yhteenveto datapisteestä.",
+                "dp_desc_raw_text": "Täydellinen, muokkaamaton sisältö, muistiinpanot tai yksityiskohtaiset tiedot.",
+                "dp_desc_topics": "Laajat, yleiskäsitteelliset kategoriat tai teemat, joihin datapiste kuuluu.",
+                "dp_desc_sentiments": "Datapisteeseen liittyvä emotionaalinen sävy tai tunne.",
+                "dp_desc_labels": "Tarkempia tunnisteita tai avainsanoja yksityiskohtaista luokittelua varten.",
+                "dp_desc_connections": "Linkit muihin liittyviin datapisteisiin itse `Chronos Ledger` -tietokannassa.",
+                "dp_desc_prev_dp": "Linkit välittömästi edelliseen datapisteeseen kronologisessa järjestyksessä.",
+                "dp_desc_prev_context": "Lyhyt katkelma tai otsikko, joka on otettu `Previous Data Point` -kentästä.",
+                "dp_desc_next_dp": "Linkki suunniteltuun tai odotettuun tulevaan datapisteeseen.",
+                "dp_desc_next_context": "Huomautus seuraavan suunnitellun datapisteen odotetusta kontekstista tai sisällöstä.",
+                "dp_desc_next_steps": "Toimintakohteet tai välittömät seuraavat vaiheet, jotka on tunnistettu tästä datapisteestä.",
+                "dp_desc_action_chosen": "Erityinen toimenpide tai päätös, joka tehtiin, jos useita seuraavia vaiheita oli mahdollista.",
+                "dp_desc_week_rel": "Linkittää tämän datapisteen tiettyyn viikkoon, johon se kuuluu.",
+                "dp_desc_date_rel": "Linkittää tämän datapisteen tiettyyn kalenteripäivämäärään, johon se kuuluu.",
+                "db_weeks_title": "🗓️ II. Viikkokronikka: Viikkotietokanta",
+                "week_desc_id": "Viikon yksilöllinen tunniste.",
+                "week_desc_start_date": "Viikon kalenterin alkamispäivämäärä.",
+                "week_desc_end_date": "Viikon kalenterin päättymispäivämäärä.",
+                "week_desc_quarter_rel": "Linkittää tämän viikon sen emokvarttaaliin.",
+                "week_desc_total_dp": "Laskee tähän viikkoon linkitettyjen datapisteiden määrän.",
+                "week_desc_goals": "Viikon avaintavoitteesi tai painopistealueesi.",
+                "db_quarters_title": "🧭 III. Neljännesvuosikampanja: Neljännesvuositietokanta",
+                "quarter_desc_id": "Neljänneksen yksilöllinen tunniste.",
+                "quarter_desc_start_date": "Neljänneksen kalenterin alkamispäivämäärä.",
+                "quarter_desc_end_date": "Neljänneksen kalenterin päättymispäivämäärä.",
+                "quarter_desc_year_rel": "Linkittää tämän neljänneksen sen emovuoteen.",
+                "quarter_desc_weeks_rel": "Linkittää kaikki 13 viikkoa tähän neljännekseen.",
+                "quarter_desc_total_dp": "Laskee kaikkien linkitettyjen viikkojen `Total Data Points` -summan.",
+                "quarter_desc_goals": "Neljänneksen yleiset tavoitteesi ja painopistealueesi.",
+                "db_years_title": "🌐 IV. Vuosikertomus: Vuositietokanta",
+                "year_desc_id": "Neljänumeroinen vuosi.",
+                "year_desc_start_date": "Vuoden kalenterin alkamispäivämäärä.",
+                "year_desc_end_date": "Vuoden kalenterin päättymispäivämäärä.",
+                "year_desc_quarters_rel": "Linkittää kaikki neljä neljännestä tähän vuoteen.",
+                "year_desc_total_dp": "Laskee kaikkien linkitettyjen neljännesten `Total Data Points` -summan.",
+                "year_desc_goals": "Suuri visiosi ja päämääräsi koko vuodelle.",
+                "db_date_title": "📅 V. Suuri Almanakka: Päivämäärätaulukko",
+                "date_desc_date": "Jokaisen merkinnän todellinen kalenteripäivämäärä.",
+                "date_desc_day_name": "Viikonpäivän koko nimi.",
+                "date_desc_day_num": "Viikonpäivän numeerinen esitys.",
+                "date_desc_day_month": "Kuukauden päivänumero.",
+                "date_desc_week_num": "Vuoden ISO-viikkonumero.",
+                "date_desc_month_name": "Kuukauden koko nimi.",
+                "date_desc_month_num": "Kuukauden numeerinen esitys.",
+                "date_desc_quarter_name": "Neljänneksen nimi (esim. Q1, Q2, Q3, Q4).",
+                "date_desc_year": "Neljänumeroinen vuosi.",
+                "date_desc_is_weekend": "Merkitsee, jos päivämäärä osuu viikonloppuun.",
+                "date_desc_is_holiday": "Mukautettu merkintä yleisille tai henkilökohtaisille lomapäiville.",
+                "scientific_background_title": "🔬 Tieteellinen Tausta: Suvereniteetin Juuret",
+                "scientific_background_text1": "\"Toinen Aivot\" -konsepti juurtuu syvälle eri tieteenaloihin, joista jokainen edistää elintärkeää osaa ihmisen suorituskyvyn ja hyvinvoinnin optimoinnin palapelissä. Näiden perustojen ymmärtäminen antaa meille mahdollisuuden rakentaa järjestelmiä, jotka todella resonoivat luontaisten kykyjemme kanssa.",
+                "cog_eng_title": "Kognitiivinen suunnittelu:",
+                "cog_eng_desc": "Keskittyy sellaisten järjestelmien ja käyttöliittymien suunnitteluun, jotka parantavat ihmisen kognitiivisia kykyjä, kuten muistia, huomiota ja päätöksentekoa. \"Toinen Aivot\" on erinomainen esimerkki näiden periaatteiden soveltamisesta henkilökohtaiseen tiedonhallintaan.",
+                "somatics_title": "Somatiikka:",
+                "somatics_desc": "Tutkii mielen ja kehon yhteyttä ja sitä, miten kehon tuntemukset ja liikkeet vaikuttavat ajatuksiimme ja tunteisiimme. Somaattisen tietoisuuden integroiminen tietojärjestelmään voi auttaa kontekstualisoimaan oivalluksia fyysisten tilojen kanssa.",
+                "neuroscience_title": "Neurotiede:",
+                "neuroscience_desc": "Tarjoaa oivalluksia siitä, miten aivot käsittelevät, tallentavat ja hakevat tietoa. Hermoverkkojen ja muistin muodostumisen ymmärtäminen ohjaa \"Toisen Aivojen\" optimaalista rakennetta ja haku mekanismeja.",
+                "biology_title": "Biologia:",
+                "biology_desc": "Tutkii ihmisen olemassaolon perustana olevia biologisia prosesseja, mukaan lukien oppimisen, stressin ja energianhallinnan fysiologiset näkökohdat, jotka kaikki vaikuttavat kognitiiviseen toimintaan.",
+                "psychology_title": "Psykologia:",
+                "psychology_desc": "Tarjoaa kehyksiä ihmisen käyttäytymisen, motivaation, tapojen ja päätöksentekovirheiden ymmärtämiseen. Nämä oivallukset ovat ratkaisevan tärkeitä \"Toisen Aivojen\" suunnittelussa, joka on paitsi tehokas myös miellyttävä ja kestävä käyttää.",
+                "philosophy_title": "Filosofia:",
+                "philosophy_desc": "Syventyy perustavanlaatuisiin kysymyksiin tiedosta, olemassaolosta ja todellisuuden luonteesta. Filosofinen tutkimus kannustaa kriittiseen ajatteluun ja auttaa muokkaamaan tiedonhallinnan yleistä tarkoitusta ja eettisiä näkökohtia.",
+                "convergence_text": "Kaikki nämä tieteenalat yhdistyvät valaisemaan polkua kohti:",
+                "sovereignty_title": "👑 Kognitiivinen ja Fyysinen Suvereniteetti",
+                "sovereignty_desc": "Antaa yksilöille mahdollisuuden hallita sisäistä maailmaansa (ajatuksia, tunteita) ja ulkoisia toimiaan (fyysistä hyvinvointia, tuottavuutta) harmonisoidun tiedon ja itsetietoisuuden järjestelmän avulla.",
+                "footer_open_source": "✨ Tämä projekti on avointa lähdekoodia ja yhteisövetoinen. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. Kaikki oikeudet pidätetään."
+            },
+            "pt": {
+                "page_title": "Painel de Projeto Akashic Brain",
+                "main_title": "Painel de Projeto Akashic Brain",
+                "welcome_message": "Bem-vindo, nobre Arquiteto! Contemple a visão estratégica de sua jornada para forjar o Notion 'Segundo Cérebro' definitivo!",
+                "open_source_tagline": "Uma Iniciativa de Código Aberto: Colabore, Use e Compartilhe!",
+                "join_expedition_title": "� Junte-se à Expedição!",
+                "join_expedition_text": "Este projeto prospera com o espírito comunitário! Convidamos outros aventureiros a colaborar, utilizar e aprimorar esta estrutura de \"Segundo Cérebro\". Suas contribuições podem ajudar outros em sua busca pela produtividade máxima!",
+                "btn_github": "Contribuir no GitHub",
+                "btn_docs": "Explorar Documentação",
+                "btn_community": "Junte-se à Comunidade",
+                "btn_share": "Compartilhar e Divulgar",
+                "unleash_potential_title": "💡 O Poder da Mente: Liberando o Potencial Humano",
+                "unleash_potential_text1": "Na grande saga do autodomínio, a capacidade de **capturar e organizar seus pensamentos e ideias** é o seu feitiço mais potente. Seu \"Segundo Cérebro\" não é meramente um sistema; é um catalisador! Ele transforma inspirações fugazes em planos concretos, conhecimento disperso em insights profundos e ações diárias em uma marcha focada em direção às suas maiores aspirações.",
+                "unleash_potential_text2": "Ao externalizar sua paisagem mental, você liberta sua mente para inovar, para traçar estratégias e para verdadeiramente **liberar seu potencial humano ilimitado**. Cada ponto de dados capturado é uma semente plantada, destinada a crescer em uma floresta de sabedoria e conquistas!",
+                "project_summary_title": "📊 Resumo do Projeto: A Grande Visão",
+                "summary_th_day": "Dia",
+                "summary_th_focus": "Foco",
+                "summary_th_hours": "Horas Estimadas",
+                "summary_focus_d1": "Esquema Central e Relações",
+                "summary_focus_d2": "Teste de Fluxo de Dados",
+                "summary_focus_d3": "Modelos para Captura",
+                "summary_focus_d4": "Dashboards e Visualizações",
+                "summary_focus_d5": "Configuração de Automações",
+                "summary_focus_d6": "Sentimento e Tópicos",
+                "summary_focus_d7": "Conexões e Linhas do Tempo",
+                "summary_focus_d8": "Modelagem de Contexto",
+                "summary_focus_d9": "Polimento da Interface",
+                "summary_focus_d10": "Exportar e Revisar",
+                "summary_total": "Total:",
+                "gantt_timeline_title": "📅 Linha do Tempo do Projeto: A Marcha Diária",
+                "gantt_th_activity": "Atividade",
+                "phase1_title": "🛠️ Fase 1: Fundamentos",
+                "gantt_activity_d1": "Esquema Central e Relações",
+                "gantt_activity_d2": "Teste de Fluxo de Dados",
+                "phase2_title": "⚙️ Fase 2: Modelos e Automação",
+                "gantt_activity_d3": "Modelos para Captura",
+                "gantt_activity_d4": "Dashboards e Visualizações",
+                "gantt_activity_d5": "Configuração de Automações",
+                "phase3_title": "🧠 Fase 3: Camada de Inteligência",
+                "gantt_activity_d6": "Sentimento e Tópicos",
+                "gantt_activity_d7": "Conexões e Linhas do Tempo",
+                "gantt_activity_d8": "Modelagem de Contexto",
+                "phase4_title": "🎨 Fase 4: Refinamento e Estética",
+                "gantt_activity_d9": "Polimento da Interface",
+                "gantt_activity_d10": "Exportar e Revisar",
+                "db_schemas_title": "📚 Esquemas de Banco de Dados: As Pedras Fundamentais",
+                "db_data_points_title": "🛡️ I. Livro-Razão Chronos: Pontos de Dados",
+                "schema_th_field": "Nome do Campo",
+                "schema_th_type": "Tipo",
+                "schema_th_description": "Descrição",
+                "dp_desc_id": "Um identificador único para cada ponto de dados individual.",
+                "dp_desc_timestamp": "A data e hora exatas em que o ponto de dados foi criado ou registrado.",
+                "dp_desc_weekday": "O dia da semana derivado automaticamente do `Timestamp`.",
+                "dp_desc_title": "Um título ou resumo conciso e primário para o ponto de dados.",
+                "dp_desc_raw_text": "O conteúdo completo e não editado, notas ou informações detalhadas.",
+                "dp_desc_topics": "Categorias ou temas amplos e abrangentes aos quais o ponto de dados pertence.",
+                "dp_desc_sentiments": "O tom emocional ou sentimento associado ao ponto de dados.",
+                "dp_desc_labels": "Tags ou palavras-chave mais específicas para classificação detalhada.",
+                "dp_desc_connections": "Links para outros pontos de dados relacionados dentro do próprio `Chronos Ledger`.",
+                "dp_desc_prev_dp": "Links para o ponto de dados imediatamente anterior em ordem cronológica.",
+                "dp_desc_prev_context": "Um breve trecho ou título extraído do `Previous Data Point`.",
+                "dp_desc_next_dp": "Um link para um ponto de dados futuro planejado ou antecipado.",
+                "dp_desc_next_context": "Uma nota sobre o contexto ou conteúdo esperado do próximo ponto de dados planejado.",
+                "dp_desc_next_steps": "Itens acionáveis ou próximos passos imediatos identificados a partir deste ponto de dados.",
+                "dp_desc_action_chosen": "A ação ou decisão específica tomada se várias próximas etapas fossem possíveis.",
+                "dp_desc_week_rel": "Vincula este ponto de dados à semana específica a que pertence.",
+                "dp_desc_date_rel": "Vincula este ponto de dados à data de calendário específica a que pertence.",
+                "db_weeks_title": "🗓️ II. A Crônica Semanal: Banco de Dados de Semanas",
+                "week_desc_id": "Um identificador único para a semana.",
+                "week_desc_start_date": "A data de início do calendário da semana.",
+                "week_desc_end_date": "A data de término do calendário da semana.",
+                "week_desc_quarter_rel": "Vincula esta semana ao seu trimestre pai.",
+                "week_desc_total_dp": "Conta o número de pontos de dados vinculados a esta semana.",
+                "week_desc_goals": "Seus principais objetivos ou áreas de foco para a semana.",
+                "db_quarters_title": "🧭 III. A Campanha Trimestral: Banco de Dados de Trimestres",
+                "quarter_desc_id": "Um identificador único para o trimestre.",
+                "quarter_desc_start_date": "A data de início do calendário do trimestre.",
+                "quarter_desc_end_date": "A data de término do calendário do trimestre.",
+                "quarter_desc_year_rel": "Vincula este trimestre ao seu ano pai.",
+                "quarter_desc_weeks_rel": "Vincula a todas as 13 semanas dentro deste trimestre.",
+                "quarter_desc_total_dp": "Soma os `Total Data Points` de todas as semanas vinculadas.",
+                "quarter_desc_goals": "Seus objetivos gerais e áreas de foco para o trimestre.",
+                "db_years_title": "🌐 IV. A Saga Anual: Banco de Dados de Anos",
+                "year_desc_id": "O ano de quatro dígitos.",
+                "year_desc_start_date": "A data de início do calendário do ano.",
+                "year_desc_end_date": "A data de término do calendário do ano.",
+                "year_desc_quarters_rel": "Vincula a todos os quatro trimestres dentro deste ano.",
+                "year_desc_total_dp": "Soma os `Total Data Points` de todos os trimestres vinculados.",
+                "year_desc_goals": "Sua grande visão e principais objetivos para o ano inteiro.",
+                "db_date_title": "📅 V. O Grande Almanaque: Tabela de Datas",
+                "date_desc_date": "A data de calendário real para cada entrada.",
+                "date_desc_day_name": "O nome completo do dia da semana.",
+                "date_desc_day_num": "A representação numérica do dia da semana.",
+                "date_desc_day_month": "O número do dia dentro do mês.",
+                "date_desc_week_num": "O número da semana ISO do ano.",
+                "date_desc_month_name": "O nome completo do mês.",
+                "date_desc_month_num": "A representação numérica do mês.",
+                "date_desc_quarter_name": "O nome do trimestre (ex: T1, T2, T3, T4).",
+                "date_desc_year": "O ano de quatro dígitos.",
+                "date_desc_is_weekend": "Marca se a data cai em um fim de semana.",
+                "date_desc_is_holiday": "Marcador personalizado para feriados públicos ou pessoais.",
+                "scientific_background_title": "🔬 Fundamentação Científica: As Raízes da Soberania",
+                "scientific_background_text1": "O conceito de \"Segundo Cérebro\" está profundamente enraizado em várias disciplinas científicas, cada uma contribuindo com uma peça vital para o quebra-cabeça da otimização do desempenho e bem-estar humanos. A compreensão desses fundamentos nos capacita a construir sistemas que realmente ressoam com nossas capacidades inatas.",
+                "cog_eng_title": "Engenharia Cognitiva:",
+                "cog_eng_desc": "Concentra-se no projeto de sistemas e interfaces que aprimoram as habilidades cognitivas humanas, como memória, atenção e tomada de decisão. Um \"Segundo Cérebro\" é um excelente exemplo da aplicação desses princípios à gestão do conhecimento pessoal.",
+                "somatics_title": "Somática:",
+                "somatics_desc": "Explora a conexão mente-corpo e como as sensações e movimentos corporais influenciam nossos pensamentos e emoções. A integração da consciência somática em um sistema de conhecimento pode ajudar a contextualizar insights com estados físicos.",
+                "neuroscience_title": "Neurociência:",
+                "neuroscience_desc": "Fornece insights sobre como o cérebro processa, armazena e recupera informações. A compreensão das redes neurais e da formação da memória informa a estrutura ideal e os mecanismos de recuperação de um \"Segundo Cérebro\".",
+                "biology_title": "Biologia:",
+                "biology_desc": "Examina os processos biológicos fundamentais que sustentam a existência humana, incluindo os aspectos fisiológicos da aprendizagem, estresse e gerenciamento de energia, todos os quais impactam a função cognitiva.",
+                "psychology_title": "Psicologia:",
+                "psychology_desc": "Oferece estruturas para entender o comportamento humano, motivação, hábitos e vieses de decisão. Esses insights são cruciais para projetar um \"Segundo Cérebro\" que seja não apenas eficaz, mas também agradável e sustentável de usar.",
+                "philosophy_title": "Filosofia:",
+                "philosophy_desc": "Aprofunda-se em questões fundamentais sobre conhecimento, existência e a natureza da realidade. A investigação filosófica incentiva o pensamento crítico e ajuda a moldar o propósito geral e as considerações éticas da gestão do conhecimento.",
+                "convergence_text": "Todas essas disciplinas convergem para iluminar o caminho para:",
+                "sovereignty_title": "👑 Soberania Cognitiva e Física",
+                "sovereignty_desc": "Capacitar os indivíduos a dominar seu mundo interno (pensamentos, emoções) e ações externas (bem-estar físico, produtividade) por meio de um sistema harmonizado de conhecimento e autoconsciência.",
+                "footer_open_source": "✨ Este projeto é de código aberto e impulsionado pela comunidade. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. Todos os direitos reservados."
+            },
+            "es": {
+                "page_title": "Panel de Proyecto Akashic Brain",
+                "main_title": "Panel de Proyecto Akashic Brain",
+                "welcome_message": "¡Bienvenido, noble Arquitecto! ¡Contempla la visión estratégica de tu búsqueda para forjar el Notion 'Segundo Cerebro' definitivo!",
+                "open_source_tagline": "Una Iniciativa de Código Abierto: ¡Colabora, Usa y Transmite!",
+                "join_expedition_title": "🤝 ¡Únete a la Expedición!",
+                "join_expedition_text": "¡Este proyecto prospera con el espíritu comunitario! Invitamos a otros aventureros a colaborar, utilizar y mejorar este marco de \"Segundo Cerebro\". ¡Tus contribuciones pueden ayudar a otros en su búsqueda de la máxima productividad!",
+                "btn_github": "Contribuir en GitHub",
+                "btn_docs": "Explorar Documentación",
+                "btn_community": "Unirse a la Comunidad",
+                "btn_share": "Compartir y Difundir",
+                "unleash_potential_title": "💡 El Poder de la Mente: Liberando el Potencial Humano",
+                "unleash_potential_text1": "En la gran saga del autodominio, la capacidad de **capturar y organizar tus pensamientos e ideas** es tu hechizo más potente. Tu \"Segundo Cerebro\" no es meramente un sistema; ¡es un catalizador! Transforma inspiraciones fugaces en planes concretos, conocimiento disperso en ideas profundas y acciones diarias en una marcha enfocada hacia tus mayores aspiraciones.",
+                "unleash_potential_text2": "Al externalizar tu paisaje mental, liberas tu mente para innovar, para elaborar estrategias y para verdaderamente **desatar tu potencial humano ilimitado**. ¡Cada punto de datos capturado es una semilla plantada, destinada a crecer en un bosque de sabiduría y logros!",
+                "project_summary_title": "📊 Resumen del Proyecto: La Gran Visión",
+                "summary_th_day": "Día",
+                "summary_th_focus": "Enfoque",
+                "summary_th_hours": "Horas Estimadas",
+                "summary_focus_d1": "Esquema Central y Relaciones",
+                "summary_focus_d2": "Prueba de Flujo de Datos",
+                "summary_focus_d3": "Plantillas para Captura",
+                "summary_focus_d4": "Paneles y Vistas",
+                "summary_focus_d5": "Configuración de Automatizaciones",
+                "summary_focus_d6": "Sentimiento y Temas",
+                "summary_focus_d7": "Conexiones y Líneas de Tiempo",
+                "summary_focus_d8": "Modelado de Contexto",
+                "summary_focus_d9": "Pulido de Interfaz",
+                "summary_focus_d10": "Exportar y Revisar",
+                "summary_total": "Total:",
+                "gantt_timeline_title": "📅 Línea de Tiempo del Proyecto: La Marcha Diaria",
+                "gantt_th_activity": "Actividad",
+                "phase1_title": "🛠️ Fase 1: Fundamentos",
+                "gantt_activity_d1": "Esquema Central y Relaciones",
+                "gantt_activity_d2": "Prueba de Flujo de Datos",
+                "phase2_title": "⚙️ Fase 2: Plantillas y Automatización",
+                "gantt_activity_d3": "Plantillas para Captura",
+                "gantt_activity_d4": "Paneles y Vistas",
+                "gantt_activity_d5": "Configuración de Automatizaciones",
+                "phase3_title": "🧠 Fase 3: Capa de Inteligencia",
+                "gantt_activity_d6": "Sentimiento y Temas",
+                "gantt_activity_d7": "Conexiones y Líneas de Tiempo",
+                "gantt_activity_d8": "Modelado de Contexto",
+                "phase4_title": "🎨 Fase 4: Refinamiento y Estética",
+                "gantt_activity_d9": "Pulido de Interfaz",
+                "gantt_activity_d10": "Exportar y Revisar",
+                "db_schemas_title": "📚 Esquemas de Base de Datos: Las Piedras Fundamentales",
+                "db_data_points_title": "🛡️ I. Libro Mayor de Chronos: Puntos de Datos",
+                "schema_th_field": "Nombre del Campo",
+                "schema_th_type": "Tipo",
+                "schema_th_description": "Descripción",
+                "dp_desc_id": "Un identificador único para cada punto de datos individual.",
+                "dp_desc_timestamp": "La fecha y hora exactas en que se creó o registró el punto de datos.",
+                "dp_desc_weekday": "El día de la semana derivado automáticamente de `Timestamp`.",
+                "dp_desc_title": "Un título o resumen conciso y primario para el punto de datos.",
+                "dp_desc_raw_text": "El contenido completo y sin editar, notas o información detallada.",
+                "dp_desc_topics": "Categorías o temas amplios y generales a los que pertenece el punto de datos.",
+                "dp_desc_sentiments": "El tono emocional o sentimiento asociado con el punto de datos.",
+                "dp_desc_labels": "Etiquetas o palabras clave más específicas para una clasificación detallada.",
+                "dp_desc_connections": "Enlaces a otros puntos de datos relacionados dentro del propio `Chronos Ledger`.",
+                "dp_desc_prev_dp": "Enlaces al punto de datos inmediatamente anterior en orden cronológico.",
+                "dp_desc_prev_context": "Un breve fragmento o título extraído del `Previous Data Point`.",
+                "dp_desc_next_dp": "Un enlace a un punto de datos futuro planificado o antecipado.",
+                "dp_desc_next_context": "Una nota sobre el contexto o contenido esperado del próximo punto de datos planificado.",
+                "dp_desc_next_steps": "Elementos accionables o próximos pasos inmediatos identificados a partir de este punto de datos.",
+                "dp_desc_action_chosen": "La acción o decisión específica tomada si fueran posibles varios pasos siguientes.",
+                "dp_desc_week_rel": "Vincula este punto de datos a la semana específica a la que pertenece.",
+                "dp_desc_date_rel": "Vincula este punto de datos a la fecha del calendario específica a la que pertenece.",
+                "db_weeks_title": "🗓️ II. La Crónica Semanal: Base de Datos de Semanas",
+                "week_desc_id": "Un identificador único para la semana.",
+                "week_desc_start_date": "La fecha de inicio del calendario de la semana.",
+                "week_desc_end_date": "La fecha de finalización del calendario de la semana.",
+                "week_desc_quarter_rel": "Vincula esta semana a su trimestre principal.",
+                "week_desc_total_dp": "Cuenta el número de puntos de datos vinculados a esta semana.",
+                "week_desc_goals": "Tus objetivos clave o áreas de enfoque para la semana.",
+                "db_quarters_title": "🧭 III. La Campaña Trimestral: Base de Datos de Trimestres",
+                "quarter_desc_id": "Un identificador único para el trimestre.",
+                "quarter_desc_start_date": "La fecha de inicio del calendario del trimestre.",
+                "quarter_desc_end_date": "La fecha de finalización del calendario del trimestre.",
+                "quarter_desc_year_rel": "Vincula este trimestre a su año principal.",
+                "quarter_desc_weeks_rel": "Vincula a las 13 semanas dentro de este trimestre.",
+                "quarter_desc_total_dp": "Suma los `Total Data Points` de todas las semanas vinculadas.",
+                "quarter_desc_goals": "Tus objetivos generales y áreas de enfoque para el trimestre.",
+                "db_years_title": "🌐 IV. La Saga Anual: Base de Datos de Años",
+                "year_desc_id": "El año de cuatro dígitos.",
+                "year_desc_start_date": "La fecha de inicio del calendario del año.",
+                "year_desc_end_date": "La fecha de finalización del calendario del año.",
+                "year_desc_quarters_rel": "Vincula a los cuatro trimestres dentro de este año.",
+                "year_desc_total_dp": "Suma los `Total Data Points` de todos los trimestres vinculados.",
+                "year_desc_goals": "Tu gran visión y principales objetivos para todo el año.",
+                "db_date_title": "📅 V. El Gran Almanaque: Tabla de Fechas",
+                "date_desc_date": "La fecha del calendario real para cada entrada.",
+                "date_desc_day_name": "El nombre completo del día de la semana.",
+                "date_desc_day_num": "La representación numérica del día de la semana.",
+                "date_desc_day_month": "El número del día dentro de su mes.",
+                "date_desc_week_num": "El número de semana ISO del año.",
+                "date_desc_month_name": "El nombre completo del mes.",
+                "date_desc_month_num": "La representación numérica del mes.",
+                "date_desc_quarter_name": "El nombre del trimestre (ej: Q1, Q2, Q3, Q4).",
+                "date_desc_year": "El año de cuatro dígitos.",
+                "date_desc_is_weekend": "Marca si la fecha cae en fin de semana.",
+                "date_desc_is_holiday": "Marcador personalizado para días festivos públicos o personales.",
+                "scientific_background_title": "🔬 Antecedentes Científicos: Las Raíces de la Soberanía",
+                "scientific_background_text1": "El concepto de \"Segundo Cerebro\" está profundamente arraigado en varias disciplinas científicas, cada una de las cuales contribuye con una pieza vital al rompecabezas de la optimización del rendimiento y el bienestar humanos. Comprender estos fundamentos nos permite construir sistemas que realmente resuenan con nuestras capacidades innatas.",
+                "cog_eng_title": "Ingeniería Cognitiva:",
+                "cog_eng_desc": "Se centra en el diseño de sistemas e interfaces que mejoran las habilidades cognitivas humanas, como la memoria, la atención y la toma de decisiones. Un \"Segundo Cerebro\" es un excelente ejemplo de aplicación de estos principios a la gestión del conocimiento personal.",
+                "somatics_title": "Somática:",
+                "somatics_desc": "Explora la conexión mente-cuerpo y cómo las sensaciones y movimientos corporales influyen en nuestros pensamientos y emociones. La integración de la conciencia somática en un sistema de conocimiento puede ayudar a contextualizar las ideas con los estados físicos.",
+                "neuroscience_title": "Neurociencia:",
+                "neuroscience_desc": "Proporciona información sobre cómo el cerebro procesa, almacena y recupera información. La comprensión de las redes neuronales y la formación de la memoria informa la estructura óptima y los mecanismos de recuperación de un \"Segundo Cerebro\".",
+                "biology_title": "Biología:",
+                "biology_desc": "Examina los procesos biológicos fundamentales que sustentan la existencia humana, incluidos los aspectos fisiológicos del aprendizaje, el estrés y la gestión de la energía, todos los cuales impactan la función cognitiva.",
+                "psychology_title": "Psicología:",
+                "psychology_desc": "Ofrece marcos para comprender el comportamiento humano, la motivación, los hábitos y los sesgos de decisión. Estos conocimientos son cruciales para diseñar un \"Segundo Cerebro\" que no solo sea eficaz, sino también agradable y sostenible de usar.",
+                "philosophy_title": "Filosofía:",
+                "philosophy_desc": "Profundiza en cuestiones fundamentales sobre el conocimiento, la existencia y la naturaleza de la realidad. La investigación filosófica fomenta el pensamiento crítico y ayuda a dar forma al propósito general y las consideraciones éticas de la gestión del conocimiento.",
+                "convergence_text": "Todas estas disciplinas convergen para iluminar el camino hacia:",
+                "sovereignty_title": "👑 Soberanía Cognitiva y Física",
+                "sovereignty_desc": "Empoderar a los individuos para que dominen su mundo interno (pensamientos, emociones) y sus acciones externas (bienestar físico, productividad) a través de un sistema armonizado de conocimiento y autoconciencia.",
+                "footer_open_source": "✨ Este proyecto es de código abierto y está impulsado por la comunidad. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. Todos los derechos reservados."
+            },
+            "ja-romaji": {
+                "page_title": "Akashic Brain Project Dashboard",
+                "main_title": "Akashic Brain Project Dashboard",
+                "welcome_message": "Yōkoso, kōki na Kenchikuka! Saikō no Notion 'Daini no Nō' o kizuageru tame no senryakuteki na gaikan o goran kudasai!",
+                "open_source_tagline": "Ōpun Sōsu Inishiatibu: Kyōryoku shi, Riyō shi, Tsutaeyō!",
+                "join_expedition_title": "🤝 Tanken ni Sanka shiyō!",
+                "join_expedition_text": "Kono purojekuto wa komyuniti no seishin de sakaemasu! Dōryō no bōkenshatachi o yobi, kono \"Daini no Nō\" no furēmuwāku ni kyōryoku shi, riyō shi, kaiyō suru koto o shōtai shimasu. Anata no kōken wa, kyōkyoku no seisansei o motomeru kare-ra no tanken o tasukeru koto ga dekimasu!",
+                "btn_github": "GitHub de Kōken suru",
+                "btn_docs": "Dokyumentēshon o Tansaku suru",
+                "btn_community": "Komyuniti ni Sanka suru",
+                "btn_share": "Share & Spread the Word",
+                "unleash_potential_title": "💡 Kokoro no Chikara: Ningen no Potensharu o Kaihō suru",
+                "unleash_potential_text1": "Jiko masutā no daibōken ni oite, **omoi ya aidea o torikomi, seiri suru** nōryoku wa, anata no mottomo yūryoku na jumon desu. Anata no \"Daini no Nō\" wa tan naru shisutemu de wa arimasen; sore wa shokubai desu! Sore wa, hakanai insupirēshon o konkretu na keikaku ni, chirabatta chishiki o fukai洞察 ni, nichiō no kōdō o saikō no shimei e no shūchū shita kōshin ni henkan shimasu.",
+                "unleash_potential_text2": "Anata no seishin no fūkei o gaibu ni dasu koto de, anata wa sōzō shi, senryaku o tate, soshite hontō ni **anata no mugen no ningen no potensharu o kaihō suru** tame ni kokoro o jiyū ni shimasu. Torikonda kaku dēta pointo wa, chie to seikō no mori ni naru unmei o motta uerareta tane desu!",
+                "project_summary_title": "📊 Purojekuto Sammarī: Idai naru Bijon",
+                "summary_th_day": "Hi",
+                "summary_th_focus": "Fōkasu",
+                "summary_th_hours": "Mitsumori Jikan",
+                "summary_focus_d1": "Koa Sukīma to Kankei",
+                "summary_focus_d2": "Dēta Furō Tesuto",
+                "summary_focus_d3": "Kyapucha no tame no Tenpurēto",
+                "summary_focus_d4": "Dashubōdo to Byū",
+                "summary_focus_d5": "Ōtomēshon Settei",
+                "summary_focus_d6": "Senchimento to Toppiku",
+                "summary_focus_d7": "Konekushon to Taimurain",
+                "summary_focus_d8": "Kontekusuto Moderu",
+                "summary_focus_d9": "Intāfēsu Porisshu",
+                "summary_focus_d10": "Ekisupōto to Rebyū",
+                "summary_total": "Gōkei:",
+                "gantt_timeline_title": "📅 Purojekuto Taimurain: Mainichi no Kōshin",
+                "gantt_th_activity": "Katsudō",
+                "phase1_title": "🛠️ Fēzu 1: Kiso",
+                "gantt_activity_d1": "Koa Sukīma to Kankei",
+                "gantt_activity_d2": "Dēta Furō Tesuto",
+                "phase2_title": "⚙️ Fēzu 2: Tenpurēto to Ōtomēshon",
+                "gantt_activity_d3": "Tenpurēto Kyapucha",
+                "gantt_activity_d4": "Dashubōdo to Byū",
+                "gantt_activity_d5": "Ōtomēshon Settei",
+                "phase3_title": "🧠 Fēzu 3: Chisei Reiyā",
+                "gantt_activity_d6": "Senchimento to Toppiku",
+                "gantt_activity_d7": "Konekushon to Taimurain",
+                "gantt_activity_d8": "Kontekusuto Moderu",
+                "phase4_title": "🎨 Fēzu 4: Saikōka to Esutetikku",
+                "gantt_activity_d9": "Intāfēsu Porisshu",
+                "gantt_activity_d10": "Ekisupōto to Rebyū",
+                "db_schemas_title": "📚 Dētabēsu Sukīma: Kiso no Ishi",
+                "db_data_points_title": "🛡️ I. Kuronosu Rejā: Dēta Pointo",
+                "schema_th_field": "Fīrudo-mei",
+                "schema_th_type": "Taippu",
+                "schema_th_description": "Setsumei",
+                "dp_desc_id": "Kaku dēta pointo no yūnīku na shibetsu-shi.",
+                "dp_desc_timestamp": "Dēta pointo ga sakusei matawa kiroku sareta seikaku na hizuke to jikan.",
+                "dp_desc_weekday": "`Timestamp` kara jidōteki ni yūdo sareta yōbi.",
+                "dp_desc_title": "Dēta pointo no kanketsu na puraimarī na haidorain matawa yōyaku.",
+                "dp_desc_raw_text": "Kanzen na mikaishū no konntentsu, nōto, matawa shōsai na jōhō.",
+                "dp_desc_topics": "Dēta pointo ga zokusuru hiroi, zenpanteki na kategori matawa tēma.",
+                "dp_desc_sentiments": "Dēta pointo ni kangei suru kanjōteki na tōn matawa kanjō.",
+                "dp_desc_labels": "Shōsai na bunrui no tame no yori tokutei no tagu matawa kīwādo.",
+                "dp_desc_connections": "`Chronos Ledger` jishin no naka no hoka no kanren suru dēta pointo e no rinku.",
+                "dp_desc_prev_dp": "Jikeiretsu jun ni chokuzen no dēta pointo e no rinku.",
+                "dp_desc_prev_context": "`Previous Data Point` kara toridashita mijikai suppinetto matawa taitoru.",
+                "dp_desc_next_dp": "Keikaku sareta matawa yosoku sareta shōrai no dēta pointo e no rinku.",
+                "dp_desc_next_context": "Tsugi no keikaku sareta dēta pointo no yosoku sareta kontekusuto matawa konntentsu ni kansuru nōto.",
+                "dp_desc_next_steps": "Kono dēta pointo kara shibetsu sareta kōdō kanō na aitemu matawa sokuza no tsugi no suteppu.",
+                "dp_desc_action_chosen": "Fukusū no tsugi no suteppu ga kanō de atta baai ni torareta tokutei no kōdō matawa kettei.",
+                "dp_desc_week_rel": "Kono dēta pointo o sore ga zokusuru tokutei no shū ni rinku suru.",
+                "dp_desc_date_rel": "Kono dēta pointo o sore ga zokusuru tokutei no karendā hizuke ni rinku suru.",
+                "db_weeks_title": "🗓️ II. Shūkan Kuronika: Shū Dētabēsu",
+                "week_desc_id": "Shū no yūnīku na shibetsu-shi.",
+                "week_desc_start_date": "Shū no karendā kaishi hizuke.",
+                "week_desc_end_date": "Shū no karendā shūryō hizuke.",
+                "week_desc_quarter_rel": "Kono shū o sono oyaku kuōtā ni rinku suru.",
+                "week_desc_total_dp": "Kono shū ni rinku sareta dēta pointo no kazu o kazoeru.",
+                "week_desc_goals": "Shū no kī to naru mokuhyō matawa fōkasu ryōiki.",
+                "db_quarters_title": "🧭 III. Kuōtā Kyanpēn: Kuōtā Dētabēsu",
+                "quarter_desc_id": "Kuōtā no yūnīku na shibetsu-shi.",
+                "quarter_desc_start_date": "Kuōtā no karendā kaishi hizuke.",
+                "quarter_desc_end_date": "Kuōtā no karendā shūryō hizuke.",
+                "quarter_desc_year_rel": "Kono kuōtā o sono oyaku toshi ni rinku suru.",
+                "quarter_desc_weeks_rel": "Kono kuōtā nai no subete no 13 shū ni rinku suru.",
+                "quarter_desc_total_dp": "Subete no rinku sareta shū kara no `Total Data Points` o gōkei suru.",
+                "quarter_desc_goals": "Kuōtā no zenpan-teki na mokuhyō to fōkasu ryōiki.",
+                "db_years_title": "🌐 IV. Nenkan Saga: Nen Dētabēsu",
+                "year_desc_id": "Yonneta no toshi.",
+                "year_desc_start_date": "Toshi no karendā kaishi hizuke.",
+                "year_desc_end_date": "Toshi no karendā shūryō hizuke.",
+                "year_desc_quarters_rel": "Kono toshi nai no subete no yotsu no kuōtā ni rinku suru.",
+                "year_desc_total_dp": "Subete no rinku sareta kuōtā kara no `Total Data Points` o gōkei suru.",
+                "year_desc_goals": "Nenkan no idai naru bijon to shuyō na mokuhyō.",
+                "db_date_title": "📅 V. Idai naru Arumanakku: Hizuke Tēburu",
+                "date_desc_date": "Kaku nyūryoku no jissai no karendā hizuke.",
+                "date_desc_day_name": "Yōbi no furu nēmu.",
+                "date_desc_day_num": "Yōbi no sūchi hyōgen.",
+                "date_desc_day_month": "Tsuki nai no hi no bangō.",
+                "date_desc_week_num": "Toshi no ISO shū bangō.",
+                "date_desc_month_name": "Tsuki no furu nēmu.",
+                "date_desc_month_num": "Tsuki no sūchi hyōgen.",
+                "date_desc_quarter_name": "Kuōtā no nēmu (e.g., Q1, Q2, Q3, Q4).",
+                "date_desc_year": "Yonneta no toshi.",
+                "date_desc_is_weekend": "Hizuke ga shūmatsu ni kakaru ka o shimesu.",
+                "date_desc_is_holiday": "Kōkyō matawa kojin no saijitsu no tame no kasutamu māku.",
+                "scientific_background_title": "🔬 Kagakuteki Haikei: Shuken no Ne",
+                "scientific_background_text1": "\"Daini no Nō\" no konseptu wa, samazama na kagakuteki bun'ya ni fukaku neza shiteおり, sorezore ga ningen no seisansei to kenkō o saitekika suru pazuru ni jūyō na pīsu o kōken shiteimasu. Kore-ra no kiso o rikai suru koto de, watashitachi wa jishin no gūzōteki nōryoku to jissai ni kyōmei suru shisutemu o kōchiku suru koto ga dekimasu.",
+                "cog_eng_title": "Kōgunitibu Enjiniaringu:",
+                "cog_eng_desc": "Kioku, chūi, kettei nōryoku nado no ningen no kōgunitibu nōryoku o kōjōさせる shisutemu to intāfēsu no disain ni shūchū shimasu. \"Daini no Nō\" wa, kore-ra no gensoku o kojin no chishiki kanri ni tekiyō suru kōrei desu.",
+                "somatics_title": "Somatikkusu:",
+                "somatics_desc": "Shinshin no tsunagari to, shintai kankaku ya undō ga shisō ya kanjō ni donoyō ni eikyō suru ka o tankyū shimasu. Somatikkusu na ishiki o chishiki shisutemu ni tōgō suru koto wa, shintai teki jōtai to no kanren de洞察 o kontekusuto-ka suru no ni yakudachimasu.",
+                "neuroscience_title": "Nōkagaku:",
+                "neuroscience_desc": "Nō ga jōhō o shori shi, hozon shi, kensaku suru shikumi ni kansuru洞察 o teikyō shimasu. Shinkei nettowāku to kioku keisei o rikai suru koto wa, \"Daini no Nō\" no saitekina kōzō to kensaku mekanizumu o shirasemasu.",
+                "biology_title": "Seibutsugaku:",
+                "biology_desc": "Ningen no sonzai o sasaeru kisoteki na seibutsugakuteki purosesu o chōsa shimasu. Kore ni wa, gakushū, sutoresu, enerugī kanri no seirigakuteki sokumen ga fukumareru ga, kore-ra wa subete kōgunitibu kinō ni eikyō shimasu.",
+                "psychology_title": "Shinrigaku:",
+                "psychology_desc": "Ningen no kōdō, dōki, shūkan, kettei no baiasu o rikai suru tame no furēmuwāku o teikyō shimasu. Kore-ra no洞察 wa, \"Daini no Nō\" o kōritsuteki de aru dake de naku, tanoshiku, jizoku kanō ni shiyō suru tame ni jūyō desu.",
+                "philosophy_title": "Tetsugaku:",
+                "philosophy_desc": "Chishiki, sonzai, genjitsu no honshitsu ni kansuru kisoteki na mondai o fukabori shimasu. Tetsugakuteki tankyū wa hihanteki shikō o shōrei shi, chishiki kanri no zenpanteki na mokuteki to rinriteki kōsatsu o keisei suru no ni yakudachimasu.",
+                "convergence_text": "Kore-ra no subete no gakumon wa, michi o terasu tame ni shūryū shimasu:",
+                "sovereignty_title": "👑 Kōgunitibu to Shintai teki Shuken",
+                "sovereignty_desc": "Chishiki to jiko ishiki no chōwa sareta shisutemu o tsūjite, jibun no naibu sekai (shisō, kanjō) to gaibu kōdō (shintai teki kenkō, seisansei) o masutā suru tame ni kojin o kyōka suru koto.",
+                "footer_open_source": "✨ Kono purojekuto wa ōpun sōsu de komyuniti-dōin desu. ✨",
+                "footer_copyright": "&copy; 2025 <span data-key=\"project_author\">RogeriusX42</span>. Zenkenri hoyū."
+            },
+            "ja-kanji": {
+                "page_title": "Akashic Brain プロジェクトダッシュボード",
+                "main_title": "Akashic Brain プロジェクトダッシュボード",
+                "welcome_message": "ようこそ、高貴なる建築家よ！究極のNotion「第二の脳」を築き上げるための戦略的概要をご覧ください！",
+                "open_source_tagline": "オープンソースイニシアティブ：協力し、利用し、伝えよう！",
+                "join_expedition_title": "🤝 探検に参加しよう！",
+                "join_expedition_text": "このプロジェクトはコミュニティの精神で栄えます！同僚の冒険者たちを招き、この「第二の脳」のフレームワークに協力し、利用し、改良することを招待します。あなたの貢献は、究極の生産性を求める彼らの探検を助けることができます！",
+                "btn_github": "GitHubで貢献する",
+                "btn_docs": "ドキュメンテーションを探索する",
+                "btn_community": "コミュニティに参加する",
+                "btn_share": "共有し、広めよう",
+                "unleash_potential_title": "💡 心の力：人間の潜在能力を解放する",
+                "unleash_potential_text1": "自己マスターの冒険において、**思考やアイデアを取り込み、整理する**能力は、あなたの最も強力な呪文です。あなたの「第二の脳」は単なるシステムではありません。それは触媒です！それは、はかないインスピレーションを具体的な計画に、散らばった知識を深い洞察に、日々の行動を最高の使命への集中した行進に変換します。",
+                "unleash_potential_text2": "あなたの精神の風景を外部に出すことで、あなたは創造し、戦略を立て、そして本当に**あなたの無限の人間的な潜在能力を解放する**ために心を自由にします。取り込んだ各データポイントは、知恵と成功の森になる運命を持った植えられた種です！",
+                "project_summary_title": "📊 プロジェクトサマリー：偉大なるビジョン",
+                "summary_th_day": "日",
+                "summary_th_focus": "焦点",
+                "summary_th_hours": "見積時間",
+                "summary_focus_d1": "コアスキーマと関係性",
+                "summary_focus_d2": "データフローテスト",
+                "summary_focus_d3": "キャプチャのためのテンプレート",
+                "summary_focus_d4": "ダッシュボードとビュー",
+                "summary_focus_d5": "自動化設定",
+                "summary_focus_d6": "感情とトピック",
+                "summary_focus_d7": "接続とタイムライン",
+                "summary_focus_d8": "コンテキストモデリング",
+                "summary_focus_d9": "インターフェースの洗練",
+                "summary_focus_d10": "エクスポートとレビュー",
+                "summary_total": "合計：",
+                "gantt_timeline_title": "📅 プロジェクトタイムライン：日々の行進",
+                "gantt_th_activity": "活動",
+                "phase1_title": "🛠️ フェーズ1：基礎",
+                "gantt_activity_d1": "コアスキーマと関係性",
+                "gantt_activity_d2": "データフローテスト",
+                "phase2_title": "⚙️ フェーズ2：テンプレートと自動化",
+                "gantt_activity_d3": "テンプレートキャプチャ",
+                "gantt_activity_d4": "ダッシュボードとビュー",
+                "gantt_activity_d5": "自動化設定",
+                "phase3_title": "🧠 フェーズ3：知性レイヤー",
+                "gantt_activity_d6": "感情とトピック",
+                "gantt_activity_d7": "接続とタイムライン",
+                "gantt_activity_d8": "コンテキストモデリング",
+                "phase4_title": "🎨 フェーズ4：最適化と美学",
+                "gantt_activity_d9": "インターフェースの洗練",
+                "gantt_activity_d10": "エクスポートとレビュー",
+                "db_schemas_title": "📚 データベーススキーマ：基礎の石",
+                "db_data_points_title": "🛡️ I. クロノス台帳：データポイント",
+                "schema_th_field": "フィールド名",
+                "schema_th_type": "タイプ",
+                "schema_th_description": "説明",
+                "dp_desc_id": "各データポイントの一意の識別子。",
+                "dp_desc_timestamp": "データポイントが作成または記録された正確な日時。",
+                "dp_desc_weekday": "タイムスタンプから自動的に導出される曜日。",
+                "dp_desc_title": "データポイントの簡潔な主要見出しまたは要約。",
+                "dp_desc_raw_text": "完全な未編集のコンテンツ、メモ、または詳細情報。",
+                "dp_desc_topics": "データポイントが属する広範な、包括的なカテゴリまたはテーマ。",
+                "dp_desc_sentiments": "データポイントに関連する感情的なトーンまたは感情。",
+                "dp_desc_labels": "詳細な分類のためのより具体的なタグまたはキーワード。",
+                "dp_desc_connections": "「クロノス台帳」自体の他の関連するデータポイントへのリンク。",
+                "dp_desc_prev_dp": "時系列順に直前のデータポイントへのリンク。",
+                "dp_desc_prev_context": "「Previous Data Point」から取得した短いスニペットまたはタイトル。",
+                "dp_desc_next_dp": "計画された、または予想される将来のデータポイントへのリンク。",
+                "dp_desc_next_context": "次の計画されたデータポイントの予想されるコンテキストまたはコンテンツに関するメモ。",
+                "dp_desc_next_steps": "このデータポイントから特定された実行可能な項目または即時の次のステップ。",
+                "dp_desc_action_chosen": "複数の次のステップが可能であった場合に取られた特定の行動または決定。",
+                "dp_desc_week_rel": "このデータポイントをそれが属する特定の週にリンクする。",
+                "dp_desc_date_rel": "このデータポイントをそれが属する特定のカレンダー日付にリンクする。",
+                "db_weeks_title": "🗓️ II. 週刊クロニクル：週データベース",
+                "week_desc_id": "週の一意の識別子。",
+                "week_desc_start_date": "週のカレンダー開始日。",
+                "week_desc_end_date": "週のカレンダー終了日。",
+                "week_desc_quarter_rel": "この週をその親四半期にリンクする。",
+                "week_desc_total_dp": "この週にリンクされたデータポイントの数を数える。",
+                "week_desc_goals": "週の主要な目標または焦点領域。",
+                "db_quarters_title": "🧭 III. 四半期キャンペーン：四半期データベース",
+                "quarter_desc_id": "四半期の一意の識別子。",
+                "quarter_desc_start_date": "四半期のカレンダー開始日。",
+                "quarter_desc_end_date": "四半期のカレンダー終了日。",
+                "quarter_desc_year_rel": "この四半期をその親年にリンクする。",
+                "quarter_desc_weeks_rel": "この四半期内のすべての13週にリンクする。",
+                "quarter_desc_total_dp": "リンクされたすべての週からの「Total Data Points」を合計する。",
+                "quarter_desc_goals": "四半期の全体的な目標と焦点領域。",
+                "db_years_title": "🌐 IV. 年間サーガ：年データベース",
+                "year_desc_id": "4桁の年。",
+                "year_desc_start_date": "年のカレンダー開始日。",
+                "year_desc_end_date": "年のカレンダー終了日。",
+                "year_desc_quarters_rel": "この年内のすべての4四半期にリンクする。",
+                "year_desc_total_dp": "リンクされたすべての四半期からの「Total Data Points」を合計する。",
+                "year_desc_goals": "年間全体の壮大なビジョンと主要な目標。",
+                "db_date_title": "📅 V. 大いなる暦：日付テーブル",
+                "date_desc_date": "各エントリの実際の日付。",
+                "date_desc_day_name": "曜日のフルネーム。",
+                "date_desc_day_num": "曜日の数値表現。",
+                "date_desc_day_month": "その月内の日の番号。",
+                "date_desc_week_num": "年のISO週番号。",
+                "date_desc_month_name": "月のフルネーム。",
+                "date_desc_month_num": "月の数値表現。",
+                "date_desc_quarter_name": "四半期の名前（例：Q1、Q2、Q3、Q4）。",
+                "date_desc_year": "4桁の年。",
+                "date_desc_is_weekend": "日付が週末に該当するかどうかを示す。",
+                "date_desc_is_holiday": "祝日または個人的な休日のカスタムマーカー。",
+                "scientific_background_title": "🔬 科学的背景：主権の根源",
+                "scientific_background_text1": "「第二の脳」の概念は、様々な科学分野に深く根ざしており、それぞれが人間のパフォーマンスと幸福を最適化するパズルの重要なピースを提供しています。これらの基礎を理解することで、私たちは本来の能力と真に共鳴するシステムを構築することができます。",
+                "cog_eng_title": "認知工学：",
+                "cog_eng_desc": "記憶、注意、意思決定などの人間の認知能力を高めるシステムとインターフェースの設計に焦点を当てています。「第二の脳」は、これらの原則を個人の知識管理に応用した典型的な例です。",
+                "somatics_title": "ソマティクス：",
+                "somatics_desc": "心と体のつながり、そして身体感覚や動きが私たちの思考や感情にどのように影響するかを探求します。知識システムにソマティックな意識を統合することは、洞察を身体的状態と関連付けるのに役立ちます。",
+                "neuroscience_title": "神経科学：",
+                "neuroscience_desc": "脳が情報を処理、保存、検索する方法に関する洞察を提供します。神経ネットワークと記憶形成を理解することは、「第二の脳」の最適な構造と検索メカニズムを形成します。",
+                "biology_title": "生物学：",
+                "biology_desc": "人間の存在を支える基本的な生物学的プロセスを研究します。これには、学習、ストレス、エネルギー管理の生理学的側面が含まれ、これらはすべて認知機能に影響を与えます。",
+                "psychology_title": "心理学：",
+                "psychology_desc": "人間の行動、動機付け、習慣、意思決定バイアスを理解するためのフレームワークを提供します。これらの洞察は、「第二の脳」を効果的であるだけでなく、楽しく持続可能に設計するために不可欠です。",
+                "philosophy_title": "哲学：",
+                "philosophy_desc": "知識、存在、現実の性質に関する根本的な問題を深く掘り下げます。哲学的探求は批判的思考を促し、知識管理の全体的な目的と倫理的考察を形成するのに役立ちます。",
+                "convergence_text": "これらすべての分野が収束し、以下の道筋を照らします：",
+                "sovereignty_title": "👑 認知的・身体的主権",
+                "sovereignty_desc": "調和の取れた知識と自己認識のシステムを通じて、個人が内面の世界（思考、感情）と外面の行動（身体的幸福、生産性）を習得できるようにすること。",
+                "footer_open_source": "✨ このプロジェクトはオープンソースであり、コミュニティ主導です。✨",
+                "footer_copyright": "© 2025 <span data-key=\"project_author\">RogeriusX42</span>. 全著作権所有。"
+            }
+        };
+
+        function updateContent(lang) {
+            // Update page title
+            document.title = translations[lang]["page_title"];
+
+            // Update all elements with data-key
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    // Handle strong tags within paragraphs by preserving inner HTML
+                    if (key.startsWith("unleash_potential_text")) {
+                        // Create a temporary div to parse the HTML string
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = translations[lang][key];
+                        element.innerHTML = tempDiv.innerHTML;
+                    } else if (key.endsWith("_title") && element.tagName === "STRONG") {
+                        // For strong tags within list items, update only text content
+                        element.textContent = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        // Set default language on load
+        window.onload = function() {
+            const savedLang = localStorage.getItem('selectedLanguage');
+            const initialLang = savedLang || 'en';
+            document.getElementById('language-selector').value = initialLang;
+            updateContent(initialLang);
+        };
+
+        // Add event listener for language selector
+        document.getElementById('language-selector').addEventListener('change', (event) => {
+            const selectedLang = event.target.value;
+            localStorage.setItem('selectedLanguage', selectedLang); // Save preference
+            updateContent(selectedLang);
+        });
+    </script>
+</body>
+</html>
+�
