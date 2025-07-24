@@ -1,13 +1,6 @@
 ```markdown
 # 🌟 Akashic Brain Project 🧠✨
 
-![GitHub last commit](https://img.shields.io/github/last-commit/your-username/akashic-brain?style=for-the-badge&color=purple)
-![GitHub stars](https://img.shields.io/github/stars/your-username/akashic-brain?style=for-the-badge&color=yellow)
-![GitHub contributors](https://img.shields.io/github/contributors/your-username/akashic-brain?style=for-the-badge&color=blue)
-![License](https://img.shields.io/github/license/your-username/akashic-brain?style=for-the-badge&color=green)
-
----
-
 ## 🌌 Welcome to the Akashic Brain: Your Personal Knowledge Nexus! 🌌
 
 Greetings, fellow seeker of wisdom! Have you ever felt your brilliant ideas slip away like whispers in the wind? Do you yearn for a system that transforms scattered thoughts into profound insights and daily actions into a focused march towards your grandest aspirations?
